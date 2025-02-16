@@ -9,6 +9,7 @@ export default async function Home() {
       <div className="container flex flex-col gap-3">
         <h1>Home page</h1>
         <AddSkill />
+        
         <div className="grid grid-cols-4">
           {skills.length > 0 ? (
             skills.map((skill) => (

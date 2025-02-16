@@ -8,6 +8,13 @@ export enum Languages {
     ARABIC = "ar",
 }
 
+export enum Routes {
+    ROOT = "/",
+    PROJECTS = "projects",
+    SKILLS = "skills",
+    CONTACT = "contact",
+  }
+
 export enum Methods {
     GET = "GET",
     POST = "POST",

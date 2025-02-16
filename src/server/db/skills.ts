@@ -1,14 +1,18 @@
 "use server";
 import { cache } from "@/utils/cache";
 import { db } from "@/utils/db";
+import { Skill } from "@prisma/client";
 import { revalidateTag } from "next/cache";
 
-export const actionAddSkill = async () => {
+
+
+
+export const actionAddSkill = async (formData: Skill) => {
 
   const skill = await db.skill.create({
     data: {
-      title: "skill-4",
-      image: "/bootstrap.png",
+      title: formData.title,
+      image:  "/bootstrap.png",
     },
   });
   await new Promise((resolve) => setTimeout(resolve, 100));
