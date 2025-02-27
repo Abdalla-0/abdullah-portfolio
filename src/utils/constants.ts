@@ -13,7 +13,15 @@ export enum Routes {
     PROJECTS = "projects",
     SKILLS = "skills",
     CONTACT = "contact",
-  }
+    DASHBOARD = "dashboard",
+    NEW = "new",
+    EDIT = "edit",
+    DELETE = "delete",
+    CV = "Abdalla_Atef.pdf",
+    LINKEDIN = "https://www.linkedin.com/in/abdalla-atef/",
+    GITHUB = "https://github.com/Abdalla-0",
+    LOGIN = "login",
+}
 
 export enum Methods {
     GET = "GET",

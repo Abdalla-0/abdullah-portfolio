@@ -1,0 +1,63 @@
+{
+  "Header": {
+    "brandName": "Abdalla",
+    "home": "Home",
+    "works": "Works",
+    "skills": "Skills",
+    "contactMe": "Contact me",
+    "callToAction": "Hire Me"
+  },
+
+  "Footer": {
+    "brandName": "ABDALLA",
+    "copyright": "All rights reserved"
+  },
+
+  "HomePage": {
+    "HeroSection": {
+      "greeting": "I am Abdalla",
+      "role": "Web Developer & UI/UX Designer",
+      "description": "I create responsive websites with clean code and user-focused designs, combining technical skills with creativity to deliver functional and visually appealing solutions.",
+      "download_cv": "Download CV",
+      "linkedin": "LinkedIn Profile",
+      "github": "GitHub Profile"
+    },
+    "AdsSection": {
+      "title": "Let’s Work together on your next Project",
+      "description": "I am available for freelance projects. Hire me and get your project done",
+      "cta": "Let’s get in touch"
+    },
+    "Contact": {
+      "title": "Get In Touch"
+    }
+  },
+
+  "Dashboard": {
+    "newSkill": "Add new skill",
+    "newProject": "Add new project",
+    "Routes": {
+      "projects": "Projects",
+      "skills": "Skills"
+    }
+  },
+
+  "Common": {
+    "ConfirmDelete": {
+      "title": "Are you absolutely sure?",
+      "description": "This action cannot be undone. This will permanently delete this item and remove your data from our servers.",
+      "cancel": "Cancel",
+      "delete": "Delete"
+    },
+    "loading": "Loading...",
+    "LocaleSwitcher": {
+      "locale": "{locale}",
+      "label": "Language"
+    },
+    "Heading": {
+      "skills": "Skills",
+      "projects": "Projects"
+    },
+    "login": "Login",
+    "logout": "Logout"
+  }
+}

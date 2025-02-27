@@ -1,0 +1,64 @@
+{
+  "Header": {
+    "brandName": "Abdalla",
+    "home": "الرئيسية",
+    "works": "الاعمال",
+    "skills": "المهارات",
+    "contactMe": "تواصل معي",
+    "callToAction": "وظفني"
+  },
+
+  "Footer": {
+    "brandName": "ABDALLA",
+    "copyright": "جميع الحقوق محفوظة"
+  },
+
+  "HomePage": {
+    "HeroSection": {
+      "greeting": "أنا عبد الله",
+      "role": "مطور ويب ومصمم UI/UX",
+      "description": "أقوم بإنشاء مواقع ويب متجاوبة بكود نظيف وتصاميم تركز على المستخدم، مما يجمع بين المهارات التقنية والإبداع لتقديم حلول وظيفية وجذابة بصريًا.",
+      "download_cv": "تحميل السيرة الذاتية",
+      "linkedin": "حساب لينكدإن",
+      "github": "حساب GitHub"
+    },
+    "AdsSection": {
+      "title": "لننجز مشروعك القادم معًا",
+      "description": "أنا متاح للمشاريع المستقلة. وظفني وسأكمل مشروعك باحترافية",
+      "cta": "تواصل معي"
+    },
+    "Contact": {
+      "title": "تواصل معي"
+    }
+  },
+
+  "Dashboard": {
+    "newSkill": "إضافة مهارة جديدة",
+    "newProject": "إضافة مشروع جديد",
+    "Routes": {
+      "projects": "المشاريع",
+      "skills": "المهارات"
+    }
+  },
+
+  "Common": {
+    "ConfirmDelete": {
+      "title": "هل أنت متأكد تمامًا؟",
+      "description": "هذا الإجراء لا يمكن التراجع عنه. سيتم حذف هذا العنصر بشكل دائم وإزالة بياناتك من خوادمنا.",
+      "cancel": "إلغاء",
+      "delete": "حذف"
+    },
+    "loading": "جاري التحميل...",
+    "LocaleSwitcher": {
+      "locale": "{locale}",
+      "label": "اللغة"
+    },
+
+    "Heading": {
+      "skills": "المهارات",
+      "projects": "المشاريع"
+    },
+    "login": "تسجيل الدخول",
+    "logout": "تسجيل الخروج"
+  }
+}

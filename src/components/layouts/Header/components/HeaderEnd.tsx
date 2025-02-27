@@ -1,13 +1,15 @@
+import LocaleSwitcher from "@/components/common/LocaleSwitcher/LocaleSwitcher";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 const HeaderEnd = () => {
+  const t = useTranslations("Header");
   return (
-    <div className="sm:ml-auto">
+    <div className="flex items-center gap-2 sm:gap-4 max-sm:ms-auto">
       <a href="#contactSection">
-        <Button className="px-4 py-2 sm:px-7 sm:py-2.5 bg-primary text-white font-medium rounded-lg transition-all hover:bg-primary/80">
-          Hire Me
-        </Button>
+        <Button className="btn-primary">{t("callToAction")}</Button>
       </a>
+      <LocaleSwitcher />
     </div>
   );
 };
