@@ -6,7 +6,7 @@ import React from "react";
 const ProjectSection = async () => {
   const projects = await actionGetProjects();
   return (
-    <section id="skillsSection" className="section-gap section-bg">
+    <section id="projectsSection" className="section-gap section-bg">
       <div className="container">
         <Heading textKey={`projects`} />
         <div
