@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Links = [
   { href: Routes.ROOT, label: "home", icon: Warehouse },
-  { href: "#worksSection", label: "works", icon: Images },
+  { href: "#projectsSection", label: "works", icon: Images },
   { href: "#skillsSection", label: "skills", icon: Lightbulb },
   { href: "#contactSection", label: "contactMe", icon: PhoneCall },
 ];
