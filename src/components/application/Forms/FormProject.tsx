@@ -94,7 +94,7 @@ const FormProject = ({
       onSubmit={handleSubmit(submitForm)}
     >
       <div>
-        <UploadImage
+        <UploadImage<ProjectType>
           setValue={setValue}
           setPreviewUrl={setPreviewUrl}
           previewUrl={previewUrl}

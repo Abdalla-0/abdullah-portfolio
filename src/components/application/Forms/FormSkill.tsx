@@ -82,7 +82,7 @@ const FormSkill = ({ type, skill }: { type: string; skill?: Skill }) => {
       onSubmit={handleSubmit(submitForm)}
     >
       <div>
-        <UploadImage
+        <UploadImage<SkillType>
           setValue={setValue}
           setPreviewUrl={setPreviewUrl}
           previewUrl={previewUrl}

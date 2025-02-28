@@ -1,10 +1,9 @@
-"use client";
-import { ProjectType } from "@/validations/ProjectSchema";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FieldValues, Path, UseFormSetValue } from "react-hook-form";
 import { CameraIcon } from "lucide-react";
 import Image from "next/image";
-import { UseFormSetValue } from "react-hook-form";
 
-const UploadImage = ({
+const UploadImage = <T extends FieldValues>({
   setPreviewUrl,
   previewUrl,
   setValue,
@@ -12,13 +11,13 @@ const UploadImage = ({
 }: {
   previewUrl: string | null;
   setPreviewUrl: React.Dispatch<React.SetStateAction<string | null>>;
-  setValue: UseFormSetValue<ProjectType>;
+  setValue: UseFormSetValue<T>;
   error?: string;
 }) => {
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file && file instanceof File && file.size > 0) {
-      setValue("image", file, { shouldValidate: true });
+      setValue("image" as Path<T>, file as any, { shouldValidate: true });
       setPreviewUrl(URL.createObjectURL(file));
     }
   };
