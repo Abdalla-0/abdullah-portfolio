@@ -12,3 +12,4 @@ export const imageSchema = (isRequired: boolean) => {
             return validMimeTypes.includes(val.type);
         }, { message: "Image is required and must be a valid file" });
 };
+

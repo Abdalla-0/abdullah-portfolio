@@ -2,11 +2,13 @@
 import BackButton from "@/components/common/BackButton/BackButton";
 import InputComponent from "@/components/common/Form/InputComponent/InputComponent";
 import UploadImage from "@/components/common/Form/UploadImage/UploadImage";
+import UploadImages from "@/components/common/Form/UploadImages/UploadImages";
 import { Button } from "@/components/ui/button";
 import {
   actionNewProject,
   actionUpdateProject,
 } from "@/server/actions/projects";
+import { ProjectWithGallery } from "@/types/project";
 import { Languages, Routes } from "@/utils/constants";
 import {
   editProjectSchema,
@@ -14,19 +16,19 @@ import {
   ProjectType,
 } from "@/validations/ProjectSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Project } from "@prisma/client";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useTranslations } from "use-intl";
+// import TextEditor from "../TextEditor/TextEditor";
 
 const FormProject = ({
   type,
   project,
 }: {
   type: string;
-  project?: Project;
+  project?: ProjectWithGallery;
 }) => {
   const {
     register,
@@ -42,10 +44,13 @@ const FormProject = ({
         : zodResolver(editProjectSchema()),
     defaultValues: {
       title: project?.title ?? "",
+      role: project?.role ?? "",
       description: project?.description ?? "",
       stack: project?.stack ?? "",
-      link: project?.link ?? "",
+      previewLink: project?.previewLink ?? "",
+      githubLink: project?.githubLink ?? "",
       image: null,
+      gallery: [],
     },
   });
   const router = useRouter();
@@ -55,13 +60,17 @@ const FormProject = ({
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     project?.image || null
   );
+  const [previewUrls, setPreviewUrls] = useState<string[]>(
+    project?.gallery?.map((img) => img.url) || []
+  );
 
   const selectedImage = watch("image");
+  const selectedGallery = watch("gallery");
 
   const submitForm: SubmitHandler<ProjectType> = async (data) => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
-      if (value && key !== "image") {
+      if (value && key !== "image" && key !== "gallery") {
         formData.append(key, value.toString());
       }
     });
@@ -69,6 +78,16 @@ const FormProject = ({
     if (selectedImage instanceof File && selectedImage.size > 0) {
       formData.append("image", selectedImage);
     }
+
+    if (Array.isArray(selectedGallery)) {
+      selectedGallery.forEach((file) => {
+        if (file instanceof File && file.size > 0) {
+          formData.append(`gallery`, file);
+        }
+      });
+    }
+
+    formData.append("remainingExistingGallery", JSON.stringify(previewUrls));
 
     try {
       if (type === "new") {
@@ -118,6 +137,14 @@ const FormProject = ({
             error={errors.description?.message}
           />
           <InputComponent
+            label="Role"
+            name="role"
+            register={register}
+            placeholder="Role"
+            error={errors.role?.message}
+          />
+          {/* <TextEditor/> */}
+          <InputComponent
             label="Stack"
             name="stack"
             register={register}
@@ -125,11 +152,24 @@ const FormProject = ({
             error={errors.stack?.message}
           />
           <InputComponent
-            label="Link"
-            name="link"
+            label="previewLink"
+            name="previewLink"
             register={register}
-            placeholder="Link"
-            error={errors.link?.message}
+            placeholder="previewLink"
+            error={errors.previewLink?.message}
+          />
+          <InputComponent
+            label="githubLink"
+            name="githubLink"
+            register={register}
+            placeholder="githubLink"
+            error={errors.githubLink?.message}
+          />
+          <UploadImages
+            setValue={setValue}
+            existingImages={project?.gallery?.map((img) => img.url) || []}
+            setExistingUrls={setPreviewUrls}
+            error={errors.gallery?.message}
           />
         </div>
 

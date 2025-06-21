@@ -14,14 +14,24 @@ datasource db {
 }
 
 model Project {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   image       String
   title       String
+  role        String
   description String
   stack       String
-  link        String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  previewLink String?   @map("link")
+  githubLink  String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  gallery     Gallery[]
+}
+
+model Gallery {
+  id        String  @id @default(cuid())
+  url       String
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
 }
 
 model Skill {

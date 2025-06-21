@@ -1,15 +1,17 @@
-import { Project } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { ProjectWithGallery } from "@/types/project";
 import Image from "next/image";
 import Link from "next/link";
 
 type ProjectCardProps = {
   projectLink: string;
-  project: Project;
+  project: ProjectWithGallery;
 };
 const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
   return (
     <Link
       href={projectLink}
+      target="_blank"
       className="group relative p-2 border border-primary transition-all duration-500 hover:shadow-lg rounded-lg"
     >
       <div className="relative block overflow-hidden">
@@ -32,16 +34,16 @@ const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
           sizes="100vw"
         />
       </div>
-
       <div className="p-4">
         <h2 className="text-lg font-semibold">
           <div className="hover:text-primary transition-colors duration-300">
             {project.title}
           </div>
         </h2>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-2">
+        <p className="text-sm text-gray-600 mt-2 line-clamp-2 min-h-[40px]">
           <span className="font-bold">Stack:</span> {project.stack}
         </p>
+        <Button className="text-sm btn-primary mt-3">More Info</Button>
       </div>
     </Link>
   );

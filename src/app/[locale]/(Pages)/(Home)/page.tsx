@@ -4,11 +4,15 @@ import HeroSection from "./components/HeroSection";
 import ProjectSection from "./components/ProjectSection";
 import SkillSection from "./components/SkillSection";
 
-export default function Home() {
+export default function Homeasync({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
   return (
     <div>
       <HeroSection />
-      <ProjectSection />
+      <ProjectSection params={params} />
       <AdsSection />
       <SkillSection />
       <Contact />
