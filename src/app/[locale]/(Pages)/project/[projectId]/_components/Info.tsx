@@ -19,7 +19,7 @@ const Info = ({ project }: { project: ProjectWithGallery }) => {
           <Link
             href={project.githubLink as string}
             target="_blank"
-            className="underline text-primary"
+            className="underline text-primary break-words"
           >
             {project.githubLink}
           </Link>
