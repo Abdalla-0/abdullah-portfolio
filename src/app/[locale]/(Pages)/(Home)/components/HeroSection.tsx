@@ -8,7 +8,6 @@ import Link from "next/link";
 const HeroSection = () => {
   const t = useTranslations("HomePage.HeroSection");
 
-
   return (
     <div
       id="heroSection"
@@ -31,10 +30,9 @@ const HeroSection = () => {
             <p className="text-gray-600 text-lg">{t("description")}</p>
             <div className="flex flex-wrap items-center gap-4 mt-4">
               <Link
-                href={`/${Routes.CV}`}
+                href={`${Routes.CV}`}
                 target="_blank"
                 className="flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-full hover:bg-primary hover:text-white transition"
-                download="Abdalla CV"
               >
                 {t("download_cv")} <Download size={20} />
               </Link>
