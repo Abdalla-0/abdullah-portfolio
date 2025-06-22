@@ -46,7 +46,8 @@ const SkillsPage = async ({
                       actionDelete={actionDeleteSingleSkill}
                     />
                   </div>
-                  <ItemCard item={skill} itemLink={skillLink} />
+
+                  <ItemCard item={skill} />
                 </div>
               );
             })

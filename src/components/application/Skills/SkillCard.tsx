@@ -1,15 +1,9 @@
 import { Skill } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
 
-type SkillCardProps = {
-  skillLink: string;
-  skill: Skill;
-};
-const SkillCard = ({ skill, skillLink }: SkillCardProps) => {
+const SkillCard = ({ skill }: { skill: Skill }) => {
   return (
-    <Link
-      href={`${skillLink}`}
+    <div
       key={skill.id}
       className="relative p-8 bg-gray-200 rounded-xl text-center block"
     >
@@ -21,7 +15,7 @@ const SkillCard = ({ skill, skillLink }: SkillCardProps) => {
         className="max-w-full h-[90px] object-contain mx-auto"
       />
       <h2 className="mt-2 text-center font-bold text-lg">{skill.title}</h2>
-    </Link>
+    </div>
   );
 };
 

@@ -14,25 +14,29 @@ const Info = ({ project }: { project: ProjectWithGallery }) => {
           <h3 className="text-2xl font-semibold">Role</h3>
           <p>{project.role}</p>
         </div>
-        <div>
-          <h3 className="text-2xl font-semibold">Github Link</h3>
-          <Link
-            href={project.githubLink as string}
-            target="_blank"
-            className="underline text-primary break-words"
-          >
-            {project.githubLink}
-          </Link>
-        </div>
-        <div>
-          <Link
-            target="_blank"
-            href={project.previewLink as string}
-            className="btn-primary"
-          >
-            Preview Link
-          </Link>
-        </div>
+        {project.githubLink !== "empty" && (
+          <div>
+            <h3 className="text-2xl font-semibold">Github Link</h3>
+            <Link
+              href={project.githubLink as string}
+              target="_blank"
+              className="underline text-primary break-words"
+            >
+              {project.githubLink}
+            </Link>
+          </div>
+        )}
+        {project.previewLink !== "empty" && (
+          <div>
+            <Link
+              target="_blank"
+              href={project.previewLink as string}
+              className="btn-primary"
+            >
+              Preview Link
+            </Link>
+          </div>
+        )}
       </div>
       <div className="col-span-2">
         <Gallery
