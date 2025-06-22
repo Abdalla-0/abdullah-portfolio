@@ -19,7 +19,6 @@ const ProjectPage = async ({
     <div className="container">
       <div className="flex flex-col gap-10">
         <h1 className="text-6xl text-center font-medium">{project.title}</h1>
-        {/* <Gallery items={project.gallery} alt="Project Gallery Image" className="max-h-[500px]"/> */}
         <Info project={project} />
         <div>
           <h3 className="text-2xl font-semibold">About Project</h3>

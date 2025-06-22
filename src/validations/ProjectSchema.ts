@@ -2,6 +2,7 @@ import z from "zod";
 import { imageSchema } from "./imageSchema";
 const newProjectSchema = () => {
     return z.object({
+        order: z.number().min(1, { message: "Order is required" }),
         title: z.string().trim().min(1, { message: "Title is required" }),
         role: z.string().trim().min(1, { message: "Role is required" }),
         description: z.string().trim().min(1, { message: "Description is required" }),
@@ -16,6 +17,7 @@ const newProjectSchema = () => {
 };
 const editProjectSchema = () => {
     return z.object({
+        order: z.number().min(1, { message: "Order is required" }),
         title: z.string().trim().min(1, { message: "Title is required" }),
         role: z.string().trim().min(1, { message: "Role is required" }),
         description: z.string().trim().min(1, { message: "Description is required" }),

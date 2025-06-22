@@ -5,12 +5,16 @@ import { editProjectSchema, newProjectSchema } from "@/validations/ProjectSchema
 import { revalidatePath, revalidateTag } from "next/cache";
 import getImageUrl from "../getImageUrl";
 import { Routes } from "@/utils/constants";
+
 export const actionGetProjects = cache(
     async () => {
         try {
             const projects = await db.project.findMany({
                 include: {
                     gallery: true,
+                },
+                orderBy: {
+                    order: "asc",
                 },
             });
 
@@ -26,6 +30,7 @@ export const actionGetProjects = cache(
 
 export const actionNewProject = async (formData: FormData) => {
     const raw = {
+        order: Number(formData.get("order")),
         title: formData.get("title"),
         role: formData.get("role"),
         description: formData.get("description"),
@@ -93,6 +98,7 @@ export const actionNewProject = async (formData: FormData) => {
             await db.project.create({
                 data: {
                     ...data,
+                    order: data.order,
                     title: data.title,
                     image: imageUrl,
                     role: data.role,
@@ -129,6 +135,7 @@ export const actionUpdateProject = async (
 ) => {
     // تجميع البيانات الخام للتحقق
     const raw = {
+        order: Number(formData.get("order")),
         title: formData.get("title"),
         role: formData.get("role"),
         description: formData.get("description"),
@@ -151,6 +158,8 @@ export const actionUpdateProject = async (
     }
 
     const data = result.data;
+    console.log("Data Order", data.order);
+
     const imageFile = data.image as File | string | null | undefined; // قد تكون File أو string (إذا كانت موجودة)
     const galleryFiles = data.gallery as unknown as (File | string | null | undefined)[]; // ستحتوي فقط على File هنا بعد الـ FormData
 
@@ -223,6 +232,7 @@ export const actionUpdateProject = async (
         await db.project.update({
             where: { id: projectId },
             data: {
+                order: data.order,
                 title: data.title,
                 role: data.role,
                 description: data.description,
@@ -258,9 +268,6 @@ export const actionUpdateProject = async (
         };
     }
 };
-
-
-
 
 
 export const actionGetSingleProject = cache(

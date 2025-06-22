@@ -50,7 +50,9 @@ const InputComponent = <FieldValue extends FieldValues>({
       {label && <Label htmlFor={name}>{label}</Label>}
       <Input
         type={showPassword ? "text" : type}
-        {...(register ? register(name) : {})}
+        {...(register
+          ? register(name, type === "number" ? { valueAsNumber: true } : {})
+          : {})}
         onChange={onChange}
         className={className}
       />
