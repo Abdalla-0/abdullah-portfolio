@@ -44,7 +44,7 @@ const ProjectsPage = async ({
                       actionDelete={actionDeleteSingleProject}
                     />
                   </div>
-                  <ItemCard item={project} itemLink={projectLink} />
+                  <ItemCard item={project} />
                 </div>
               );
             })
