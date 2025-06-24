@@ -3,20 +3,16 @@ import {
   actionGetSingleProject,
 } from "@/server/actions/projects";
 import Info from "./_components/Info";
+import { Locale } from "@/i18n/routing";
 export async function generateStaticParams() {
   const projects = await actionGetProjects();
-  const locales = ["en", "ar"];
-  return projects.flatMap((project) =>
-    locales.map((locale) => ({
-      locale,
-      projectId: project.id,
-    }))
-  );
+
+  return projects.map((project) => ({ projectId: project.id }));
 }
 const ProjectPage = async ({
   params,
 }: {
-  params: Promise<{ projectId: string }>;
+  params: Promise<{ locale: Locale; projectId: string }>;
 }) => {
   const { projectId } = await params;
   const project = (await actionGetSingleProject(projectId)) ?? undefined;
