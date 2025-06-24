@@ -1,10 +1,19 @@
 import FormProject from "@/components/application/Forms/FormProject";
-import { actionGetProjects, actionGetSingleProject } from "@/server/actions/projects";
+import { routing } from "@/i18n/routing";
+import {
+  actionGetProjects,
+  actionGetSingleProject,
+} from "@/server/actions/projects";
 
 export async function generateStaticParams() {
   const projects = await actionGetProjects();
 
-  return projects.map((project) => ({ projectId: project.id }));
+  return projects.flatMap((project) =>
+    routing.locales.map((locale) => ({
+      locale,
+      projectId: project.id,
+    }))
+  );
 }
 const EditProjectPage = async ({
   params,
