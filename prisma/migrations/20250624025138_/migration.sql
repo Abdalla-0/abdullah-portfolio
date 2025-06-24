@@ -1,13 +1,14 @@
 -- CreateTable
 CREATE TABLE "Project" (
     "id" TEXT NOT NULL,
+    "order" INTEGER DEFAULT 0,
     "image" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "role" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "stack" TEXT NOT NULL,
-    "link" TEXT,
     "githubLink" TEXT,
+    "previewLink" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -17,6 +18,7 @@ CREATE TABLE "Project" (
 -- CreateTable
 CREATE TABLE "Gallery" (
     "id" TEXT NOT NULL,
+    "order" INTEGER DEFAULT 0,
     "url" TEXT NOT NULL,
     "projectId" TEXT NOT NULL,
 
@@ -26,6 +28,7 @@ CREATE TABLE "Gallery" (
 -- CreateTable
 CREATE TABLE "Skill" (
     "id" TEXT NOT NULL,
+    "order" INTEGER DEFAULT 0,
     "image" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

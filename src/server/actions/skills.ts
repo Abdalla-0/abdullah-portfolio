@@ -10,7 +10,11 @@ import getImageUrl from "../getImageUrl";
 export const actionGetSkills = cache(
   async () => {
     try {
-      const skills = await db.skill.findMany();
+      const skills = await db.skill.findMany({
+        orderBy: {
+          order: "asc",
+        },
+      });
       return skills;
     } catch (error) {
       console.error("Error fetching skills:", error);
@@ -22,8 +26,12 @@ export const actionGetSkills = cache(
 );
 
 export const actionNewSkill = async (formData: FormData) => {
-  const result = newSkillSchema().safeParse(Object.fromEntries(formData.entries()));
+  const raw = {
+    ...Object.fromEntries(formData.entries()),
+    order: Number(formData.get("order")),
+  };
 
+  const result = newSkillSchema().safeParse(raw);
   if (!result.success) {
     return {
       error: "Something wrong in validation",
@@ -33,6 +41,8 @@ export const actionNewSkill = async (formData: FormData) => {
   }
 
   const data = result.data;
+
+
   const imageFile = data.image as File;
 
   if (!imageFile || imageFile.size === 0) {
@@ -51,6 +61,7 @@ export const actionNewSkill = async (formData: FormData) => {
       await db.skill.create({
         data: {
           ...data,
+          order: data.order,
           title: data.title,
           image: imageUrl,
         },

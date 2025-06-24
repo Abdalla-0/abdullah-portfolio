@@ -11,7 +11,11 @@ export const actionGetProjects = cache(
         try {
             const projects = await db.project.findMany({
                 include: {
-                    gallery: true,
+                    gallery: {
+                        orderBy: {
+                            order: "asc",
+                        },
+                    },
                 },
                 orderBy: {
                     order: "asc",
@@ -58,26 +62,32 @@ export const actionNewProject = async (formData: FormData) => {
 
     const galleryFiles = formData.getAll("gallery") as File[];
 
+    const galleryOrdersRaw = formData.getAll("galleryOrders") as string[];
+    const galleryOrders = galleryOrdersRaw.map((order) => Number(order));
+
     const validGalleryFiles = galleryFiles.filter(
         (file) => file instanceof File && file.size > 0
     );
 
-    const galleryUrlsPromises = validGalleryFiles.map(async (file) => {
+    const galleryUrlsPromises = validGalleryFiles.map(async (file, index) => {
         try {
             const url = await getImageUrl(file, "portifolio/project_gallery");
             if (!url) {
                 console.warn(`getImageUrl returned empty/null for gallery file: ${file.name}`);
                 return null;
             }
-            return url;
+            return {
+                url,
+                order: galleryOrders[index] || 0,
+            };
         } catch (uploadError) {
             console.error(`Error uploading gallery image ${file.name}:`, uploadError);
             return null;
         }
     });
 
-    const galleryUrls = (await Promise.all(galleryUrlsPromises)).filter(
-        (url): url is string => Boolean(url)
+    const galleryEntries = (await Promise.all(galleryUrlsPromises)).filter(
+        (entry): entry is { url: string; order: number } => Boolean(entry)
     );
 
 
@@ -107,7 +117,10 @@ export const actionNewProject = async (formData: FormData) => {
                     previewLink: data.previewLink,
                     githubLink: data.githubLink,
                     gallery: {
-                        create: galleryUrls.map((url) => ({ url })),
+                        create: galleryEntries.map((entry) => ({
+                            url: entry.url,
+                            order: entry.order,
+                        })),
                     },
                 },
             });
@@ -133,7 +146,6 @@ export const actionUpdateProject = async (
     projectId: string,
     locale: string
 ) => {
-    // تجميع البيانات الخام للتحقق
     const raw = {
         order: Number(formData.get("order")),
         title: formData.get("title"),
@@ -158,10 +170,9 @@ export const actionUpdateProject = async (
     }
 
     const data = result.data;
-    console.log("Data Order", data.order);
 
-    const imageFile = data.image as File | string | null | undefined; // قد تكون File أو string (إذا كانت موجودة)
-    const galleryFiles = data.gallery as unknown as (File | string | null | undefined)[]; // ستحتوي فقط على File هنا بعد الـ FormData
+    const imageFile = data.image as File | string | null | undefined;
+    const galleryFiles = data.gallery as unknown as (File | string | null | undefined)[];
 
 
     let imageUrl: string | undefined;
@@ -174,22 +185,29 @@ export const actionUpdateProject = async (
         }
     }
 
-    // معالجة صور المعرض الجديدة (الملفات)
-    const newGalleryUrlsPromises = galleryFiles
-        .filter((file): file is File => file instanceof File && file.size > 0) // تأكد أنها ملفات File
-        .map(async (file) => {
-            try {
-                return await getImageUrl(file, "portifolio/project_gallery");
-            } catch (error) {
-                console.error("Error uploading new gallery image", error);
-                return null;
-            }
-        });
-    const newGalleryUrls = (await Promise.all(newGalleryUrlsPromises)).filter(
-        (url): url is string => Boolean(url)
+    const galleryOrdersRaw = Array.from(formData.entries())
+        .filter(([key]) => key.startsWith("galleryOrders["))
+        .map(([, value]) => Number(value));
+
+    const galleryWithOrder = await Promise.all(
+        galleryFiles
+            .filter((file): file is File => file instanceof File && file.size > 0)
+            .map(async (file, index) => {
+                try {
+                    const url = await getImageUrl(file, "portifolio/project_gallery");
+                    return { url, order: galleryOrdersRaw[index] ?? 0 };
+                } catch (error) {
+                    console.error("Error uploading gallery image", error);
+                    return null;
+                }
+            })
     );
 
-    // استخراج الـ URLs للصور القديمة التي يجب الاحتفاظ بها من الـ FormData
+    const newGalleryData = galleryWithOrder.filter(
+        (entry): entry is { url: string; order: number } => Boolean(entry)
+    );
+
+
     let existingGalleryUrlsToKeep: string[] = [];
     const remainingExistingGalleryRaw = formData.get("remainingExistingGallery") as string;
     if (remainingExistingGalleryRaw) {
@@ -204,29 +222,27 @@ export const actionUpdateProject = async (
     try {
         const existingItem = await db.project.findUnique({
             where: { id: projectId },
-            include: { gallery: true }, // تأكد من تحميل صور المعرض الموجودة
+            include: { gallery: true },
         });
 
         if (!existingItem) {
             return { status: 404, message: "Project not found" };
         }
 
-        // تحديد الصور الموجودة في قاعدة البيانات والتي لم يعد المستخدم يريدها
+
         const imagesToDelete = existingItem.gallery.filter(
             (img) => !existingGalleryUrlsToKeep.includes(img.url)
         );
 
-        // حذف هذه الصور من قاعدة البيانات
+
         if (imagesToDelete.length > 0) {
-            await db.gallery.deleteMany({ // تأكد أن لديك نموذج 'Image' في Prisma لمتحكمات المعرض
+            await db.gallery.deleteMany({
                 where: {
                     id: {
                         in: imagesToDelete.map((img) => img.id),
                     },
                 },
             });
-            // (اختياري) يمكنك أيضًا إضافة منطق لحذف الصور من Cloudinary هنا
-            // يتطلب ذلك استخدام Cloudinary API لإزالة الصور بالـ public_id
         }
 
         await db.project.update({
@@ -239,16 +255,12 @@ export const actionUpdateProject = async (
                 stack: data.stack,
                 previewLink: data.previewLink,
                 githubLink: data.githubLink,
-                // تحديث الصورة الرئيسية فقط إذا تم تحميل صورة جديدة
                 ...(imageUrl && { image: imageUrl }),
-                // إذا لم يتم تحميل صورة جديدة، لا تقم بتغيير حقل الصورة في DB
-                // وإلا ستكون قيمتها undefined أو null حسب defaultValues
-
                 gallery: {
-                    // قم بإنشاء إدخالات جديدة لصور المعرض الجديدة فقط
-                    create: newGalleryUrls.map((url) => ({ url })),
-                    // لا يوجد داعي لـ connectExisting أو set هنا إذا كان الهدف هو فقط إضافة الجديد وحذف غير الموجود
-                    // الـ URLs التي نريد الاحتفاظ بها موجودة بالفعل في DB ولن يتم تعديلها.
+                    create: newGalleryData.map((item) => ({
+                        url: item.url,
+                        order: item.order,
+                    })),
                 },
             },
         });

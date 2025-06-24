@@ -21,7 +21,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useTranslations } from "use-intl";
-// import TextEditor from "../TextEditor/TextEditor";
 
 const FormProject = ({
   type,
@@ -54,6 +53,7 @@ const FormProject = ({
       gallery: [],
     },
   });
+
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || Languages.ENGLISH;
@@ -64,12 +64,15 @@ const FormProject = ({
   const [previewUrls, setPreviewUrls] = useState<string[]>(
     project?.gallery?.map((img) => img.url) || []
   );
+  const [imagesData, setImagesData] = useState<
+    { file: File | null; order?: number }[]
+  >([]);
 
   const selectedImage = watch("image");
-  const selectedGallery = watch("gallery");
 
   const submitForm: SubmitHandler<ProjectType> = async (data) => {
     const formData = new FormData();
+
     Object.entries(data).forEach(([key, value]) => {
       if (value && key !== "image" && key !== "gallery") {
         formData.append(key, value.toString());
@@ -80,13 +83,12 @@ const FormProject = ({
       formData.append("image", selectedImage);
     }
 
-    if (Array.isArray(selectedGallery)) {
-      selectedGallery.forEach((file) => {
-        if (file instanceof File && file.size > 0) {
-          formData.append(`gallery`, file);
-        }
-      });
-    }
+    imagesData.forEach(({ file, order }) => {
+      if (file instanceof File && file.size > 0) {
+        formData.append("gallery", file);
+        formData.append("galleryOrders[]", String(order ?? 0));
+      }
+    });
 
     formData.append("remainingExistingGallery", JSON.stringify(previewUrls));
 
@@ -152,7 +154,6 @@ const FormProject = ({
             placeholder="Role"
             error={errors.role?.message}
           />
-          {/* <TextEditor/> */}
           <InputComponent
             label="Stack"
             name="stack"
@@ -178,6 +179,7 @@ const FormProject = ({
             setValue={setValue}
             existingImages={project?.gallery?.map((img) => img.url) || []}
             setExistingUrls={setPreviewUrls}
+            setImagesData={setImagesData}
             error={errors.gallery?.message}
           />
         </div>
