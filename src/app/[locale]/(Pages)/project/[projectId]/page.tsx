@@ -5,8 +5,13 @@ import {
 import Info from "./_components/Info";
 export async function generateStaticParams() {
   const projects = await actionGetProjects();
-
-  return projects.map((project) => ({ projectId: project.id }));
+  const locales = ["en", "ar"];
+  return projects.flatMap((project) =>
+    locales.map((locale) => ({
+      locale,
+      projectId: project.id,
+    }))
+  );
 }
 const ProjectPage = async ({
   params,
@@ -15,14 +20,6 @@ const ProjectPage = async ({
 }) => {
   const { projectId } = await params;
   const project = (await actionGetSingleProject(projectId)) ?? undefined;
-  if (!project) {
-    return <div className="text-center text-red-500">Project Not Found</div>;
-  }
-
-  if (!project || !project.title || !project.stack) {
-    console.error("🚨 Project data is incomplete:", project);
-    return <div>Something went wrong. Project is incomplete.</div>;
-  }
   return (
     <div className="container">
       <div className="flex flex-col gap-10">
