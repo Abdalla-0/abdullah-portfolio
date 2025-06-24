@@ -8,12 +8,8 @@ export async function generateStaticParams() {
 
   return projects.map((project) => ({ projectId: project.id }));
 }
-const ProjectPage = async ({
-  params,
-}: {
-  params: Promise<{ projectId: string }>;
-}) => {
-  const { projectId } = await params;
+const ProjectPage = async ({ params }: { params: { projectId: string } }) => {
+  const { projectId } = params;
   const project = (await actionGetSingleProject(projectId)) ?? undefined;
   return (
     <div className="container">
