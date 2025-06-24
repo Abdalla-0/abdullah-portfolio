@@ -288,7 +288,11 @@ export const actionGetSingleProject = cache(
             const project = await db.project.findUnique({
                 where: { id },
                 include: {
-                    gallery: true,
+                    gallery: {
+                        orderBy: {
+                            order: "asc",
+                        },
+                    },
                 },
             });
 
