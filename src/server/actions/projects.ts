@@ -282,13 +282,17 @@ export const actionUpdateProject = async (
 };
 
 
-export const actionGetSingleProject =
+export const actionGetSingleProject = cache(
     async (id: string) => {
         try {
             const project = await db.project.findUnique({
                 where: { id },
                 include: {
-                    gallery: true,
+                    gallery: {
+                        orderBy: {
+                            order: "asc",
+                        },
+                    },
                 },
             });
 
@@ -301,11 +305,10 @@ export const actionGetSingleProject =
             console.error("Error fetching project:", error);
             throw new Error("Failed to fetch project");
         }
-    };
-
-//  أزل السطرين الأخيرين المتعلقين بـ `cache` ومفتاح الكاش من تعريف الدالة.
-//  [`project-${crypto.randomUUID()}`],
-//  { revalidate: 3600 }
+    },
+    [`project-${crypto.randomUUID()}`],
+    { revalidate: 3600 }
+);
 
 
 export const actionDeleteSingleProject =
