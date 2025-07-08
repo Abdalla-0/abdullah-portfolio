@@ -41,13 +41,15 @@ export default async function RootLayout({
     >
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main className="min-h-[600px]">
-            <ToastContainer />
-            <Settings />
-            {children}
-          </main>
-          <Footer />
+          <div className="relative before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2 before:w-full before:h-[700px] before:bg-gradient-to-b before:from-[color-mix(in_srgb,var(--color-primary),white_90%)] before:to-transparent before:z-[-1]">
+            <Header />
+            <main className="min-h-[600px]">
+              <ToastContainer />
+              <Settings />
+              {children}
+            </main>
+            <Footer />
+          </div>
         </NextIntlClientProvider>
       </body>
     </html>
