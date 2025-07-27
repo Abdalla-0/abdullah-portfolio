@@ -19,8 +19,8 @@ const Gallery = ({
   items,
   className,
   alt,
-  width = 500,
-  height = 500,
+  width = 0,
+  height = 0,
 }: GalleryProps) => {
   if (!items || items.length === 0) {
     return (
@@ -33,21 +33,22 @@ const Gallery = ({
     <Carousel>
       <CarouselContent>
         {items.map((item) => (
-          <CarouselItem key={item.id} className={`${className}`}>
+          <CarouselItem key={item.id} className={`grid items-center justify-center ${className}`}>
             <Image
               src={item.url}
               alt={`${alt}`}
               width={width}
               height={height}
-              className="w-full h-full object-contain"
+              sizes="100vw"
+              className="w-auto h-auto"
             />
           </CarouselItem>
         ))}
       </CarouselContent>
       {items.length > 1 && (
         <>
-          <CarouselPrevious className="btn-gallery btn-prev" />
-          <CarouselNext className="btn-gallery btn-next" />
+          <CarouselPrevious className="btn-gallery w-[40px] h-[40px] btn-prev shadow-xl" />
+          <CarouselNext className="btn-gallery w-[40px] h-[40px]  btn-next shadow-xl" />
         </>
       )}
     </Carousel>
