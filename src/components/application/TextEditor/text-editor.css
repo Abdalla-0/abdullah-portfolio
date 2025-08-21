@@ -1,23 +1,6 @@
-.ProseMirror {
-    border: 1px solid #eee;
-    border-radius: 4px;
-    padding: 8px;
-    margin-top: 8px;
-
-    &:focus-visible {
-        border-color: #ddd;
-    }
-}
-
-.button-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-
-    button {
-        background-color: #eee;
-        padding-block: 4px;
-        padding-inline: 8px;
-        border-radius: 4px;
-    }
+.tiptap-image-style {
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: contain;
+    border-radius: 8px;
 }

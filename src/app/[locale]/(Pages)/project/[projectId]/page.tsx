@@ -29,6 +29,10 @@ const ProjectPage = async ({
         <div>
           <h3 className="text-2xl font-semibold">About Project</h3>
           <p className="leading-8">{project.description}</p>
+          <div
+            dangerouslySetInnerHTML={{ __html: project.editorContent ?? "" }}
+            className="tiptap"
+          />
         </div>
       </div>
     </div>

@@ -21,6 +21,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useTranslations } from "use-intl";
+import TextEditor from "../TextEditor/TextEditor";
 
 const FormProject = ({
   type,
@@ -46,6 +47,7 @@ const FormProject = ({
       title: project?.title ?? "",
       role: project?.role ?? "",
       description: project?.description ?? "",
+      editorContent: project?.editorContent ?? "",
       stack: project?.stack ?? "",
       previewLink: project?.previewLink ?? "",
       githubLink: project?.githubLink ?? "",
@@ -72,9 +74,14 @@ const FormProject = ({
 
   const submitForm: SubmitHandler<ProjectType> = async (data) => {
     const formData = new FormData();
-
+    formData.append("editorContent", data.editorContent?? "");
     Object.entries(data).forEach(([key, value]) => {
-      if (value && key !== "image" && key !== "gallery") {
+      if (
+        value &&
+        key !== "image" &&
+        key !== "gallery" &&
+        key !== "editorContent"
+      ) {
         formData.append(key, value.toString());
       }
     });
@@ -147,6 +154,18 @@ const FormProject = ({
             placeholder="Description"
             error={errors.description?.message}
           />
+          <TextEditor
+            editorContent={watch("editorContent") || ""}
+            onChange={(editorContent) =>
+              setValue("editorContent", editorContent)
+            }
+          />
+          {errors.editorContent && (
+            <p className="text-red-500 text-sm">
+              {errors.editorContent.message}
+            </p>
+          )}
+
           <InputComponent
             label="Role"
             name="role"

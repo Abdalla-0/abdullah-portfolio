@@ -8,18 +8,21 @@ datasource db {
 }
 
 model Project {
-  id          String    @id @default(cuid())
-  order       Int?      @default(0)
-  image       String
-  title       String
-  role        String
-  description String
-  stack       String
-  githubLink  String?
-  previewLink String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  gallery     Gallery[]
+  id            String    @id @default(cuid())
+  order         Int?      @default(0)
+  image         String
+  title         String
+  description   String
+  editorContent String?
+  tag           String?
+  role          String
+  isPublished   Boolean   @default(false)
+  stack         String
+  githubLink    String?
+  previewLink   String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  gallery       Gallery[]
 }
 
 model Gallery {
