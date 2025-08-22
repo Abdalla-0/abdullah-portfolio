@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ProjectWithGallery } from "@/types/project";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -8,6 +9,7 @@ type ProjectCardProps = {
   project: ProjectWithGallery;
 };
 const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
+  const t = useTranslations("HomePage.ProjectsSection");
   return (
     <Link
       href={projectLink}
@@ -43,7 +45,7 @@ const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
         <p className="text-sm text-gray-600 mt-2 line-clamp-2 min-h-[40px]">
           <span className="font-bold">Stack:</span> {project.stack}
         </p>
-        <Button className="text-sm btn-primary mt-3">More Info</Button>
+        <Button className="text-sm btn-primary mt-3">{t("btnAction")}</Button>
       </div>
     </Link>
   );

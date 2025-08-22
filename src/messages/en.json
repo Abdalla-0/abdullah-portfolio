@@ -22,6 +22,9 @@
       "linkedin": "LinkedIn Profile",
       "github": "GitHub Profile"
     },
+    "ProjectsSection": {
+      "btnAction": "More Info"
+    },
     "AdsSection": {
       "title": "Let’s Work together on your next Project",
       "description": "I am available for freelance projects. Hire me and get your project done",
@@ -29,6 +32,20 @@
     },
     "Contact": {
       "title": "Get In Touch"
+    }
+  },
+  "ProjectPage": {
+    "info": {
+      "stack": "Stack",
+      "role": "Role",
+      "githubLink": "Github",
+      "livePreview": "Live Preview"
+    },
+    "gallery": {
+      "btnAction": "Screenshots"
+    },
+    "content": {
+      "aboutProject": "About Project"
     }
   },
 

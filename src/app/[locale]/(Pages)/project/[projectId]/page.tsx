@@ -1,9 +1,11 @@
+import { Locale, routing } from "@/i18n/routing";
 import {
   actionGetProjects,
   actionGetSingleProject,
 } from "@/server/actions/projects";
+import Content from "./_components/Content";
 import Info from "./_components/Info";
-import { Locale, routing } from "@/i18n/routing";
+import ProjectGallery from "./_components/ProjectGallery";
 export async function generateStaticParams() {
   const projects = await actionGetProjects();
 
@@ -25,15 +27,11 @@ const ProjectPage = async ({
     <div className="container">
       <div className="flex flex-col gap-10">
         <h1 className="text-6xl text-center font-medium">{project.title}</h1>
-        <Info project={project} />
-        <div>
-          <h3 className="text-2xl font-semibold">About Project</h3>
-          <p className="leading-8">{project.description}</p>
-          <div
-            dangerouslySetInnerHTML={{ __html: project.editorContent ?? "" }}
-            className="tiptap"
-          />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <Info project={project} />
+          <ProjectGallery project={project} />
         </div>
+        <Content project={project} />
       </div>
     </div>
   );

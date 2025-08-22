@@ -22,6 +22,9 @@
       "linkedin": "حساب لينكدإن",
       "github": "حساب GitHub"
     },
+    "ProjectsSection": {
+      "btnAction": "مزيد من التفاصيل"
+    },
     "AdsSection": {
       "title": "لننجز مشروعك القادم معًا",
       "description": "أنا متاح للمشاريع المستقلة. وظفني وسأكمل مشروعك باحترافية",
@@ -29,6 +32,20 @@
     },
     "Contact": {
       "title": "تواصل معي"
+    }
+  },
+  "ProjectPage": {
+    "info": {
+      "stack": "المسار",
+      "role": "الوظيفة",
+      "githubLink": "Github",
+      "livePreview": "المعاينة المباشرة"
+    },
+    "gallery": {
+      "btnAction": "لقطات الشاشة"
+    },
+    "content": {
+      "aboutProject": "عن المشروع"
     }
   },
 
