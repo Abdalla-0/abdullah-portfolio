@@ -7,18 +7,35 @@ import {
 } from "@/validations/ProjectSchema";
 import { revalidatePath, revalidateTag } from "next/cache";
 import getImageUrl from "../getImageUrl";
-import { Routes } from "@/utils/constants";
+import { Routes, SUPPORTED_LANGUAGES } from "@/utils/constants";
+import { parseTranslationsFromFormData } from "@/utils/parseTranslationsFromFormData";
 
-export const actionGetProjects = cache(
+export const actionGetAllProjects = cache(
+  async () => {
+    return await db.project.findMany({
+      include: {
+        gallery: { orderBy: { order: "asc" } },
+        translations: true,
+      },
+      orderBy: { order: "asc" },
+    });
+  },
+  ["all-projects"],
+  { revalidate: false, tags: ["projects"] }
+);
+
+export const actionGetPublishedProjects = cache(
   async () => {
     try {
       const projects = await db.project.findMany({
+        where: { isPublished: true },
         include: {
           gallery: {
             orderBy: {
               order: "asc",
             },
           },
+          translations: true,
         },
         orderBy: {
           order: "asc",
@@ -37,6 +54,7 @@ export const actionGetProjects = cache(
 
 export const actionNewProject = async (formData: FormData) => {
   const raw = {
+    translations: parseTranslationsFromFormData(formData, SUPPORTED_LANGUAGES),
     order: Number(formData.get("order")),
     title: formData.get("title"),
     role: formData.get("role"),
@@ -47,6 +65,7 @@ export const actionNewProject = async (formData: FormData) => {
     githubLink: formData.get("githubLink"),
     image: formData.get("image"),
     gallery: formData.getAll("gallery"),
+    isPublished: formData.get("isPublished") === "true",
   };
 
   const result = newProjectSchema().safeParse(raw);
@@ -112,19 +131,28 @@ export const actionNewProject = async (formData: FormData) => {
         data: {
           ...data,
           order: data.order,
-          title: data.title,
           image: imageUrl,
           role: data.role,
-          description: data.description,
-          editorContent: data.editorContent,
           stack: data.stack,
           previewLink: data.previewLink,
           githubLink: data.githubLink,
+          isPublished: data.isPublished,
           gallery: {
             create: galleryEntries.map((entry) => ({
               url: entry.url,
               order: entry.order,
             })),
+          },
+          translations: {
+            createMany: {
+              data: data.translations?.map((t) => ({
+                language: t.language,
+                title: t.title,
+                description: t.description,
+                editorContent: t.editorContent,
+                tag: t.tag,
+              })),
+            },
           },
         },
       });
@@ -151,6 +179,7 @@ export const actionUpdateProject = async (
   locale: string
 ) => {
   const raw = {
+    translations: parseTranslationsFromFormData(formData, SUPPORTED_LANGUAGES),
     order: Number(formData.get("order")),
     title: formData.get("title"),
     role: formData.get("role"),
@@ -162,8 +191,9 @@ export const actionUpdateProject = async (
     image: formData.get("image"),
     gallery: formData.getAll("gallery"),
     remainingExistingGallery: formData.get("remainingExistingGallery"),
+    isPublished: formData.get("isPublished") === "true",
   };
-
+  console.log("isPublished", raw.isPublished);
   const result = editProjectSchema().safeParse(raw);
   if (!result.success) {
     console.error("Validation error in actionUpdateProject:", result.error);
@@ -175,7 +205,6 @@ export const actionUpdateProject = async (
   }
 
   const data = result.data;
-
   const imageFile = data.image as File | string | null | undefined;
   const galleryFiles = data.gallery as unknown as (
     | File
@@ -256,18 +285,36 @@ export const actionUpdateProject = async (
       where: { id: projectId },
       data: {
         order: data.order,
-        title: data.title,
         role: data.role,
-        description: data.description,
-        editorContent: data.editorContent,
         stack: data.stack,
         previewLink: data.previewLink,
         githubLink: data.githubLink,
+        isPublished: data.isPublished,
         ...(imageUrl && { image: imageUrl }),
         gallery: {
           create: newGalleryData.map((item) => ({
             url: item.url,
             order: item.order,
+          })),
+        },
+        translations: {
+          upsert: data.translations?.map((t) => ({
+            where: {
+              projectId_language: { projectId, language: t.language },
+            },
+            create: {
+              language: t.language,
+              title: t.title,
+              description: t.description,
+              editorContent: t.editorContent,
+              tag: t.tag,
+            },
+            update: {
+              title: t.title,
+              description: t.description,
+              editorContent: t.editorContent,
+              tag: t.tag,
+            },
           })),
         },
       },
@@ -302,10 +349,39 @@ export const actionGetSingleProject = cache(
               order: "asc",
             },
           },
+          translations: true,
         },
       });
 
       if (!project) {
+        throw new Error("Project not found");
+      }
+
+      return project;
+    } catch (error) {
+      console.error("Error fetching project:", error);
+      throw new Error("Failed to fetch project");
+    }
+  },
+  ["projects", "single-project"],
+  { revalidate: 3600 }
+);
+export const actionGetSinglePublishedProject = cache(
+  async (id: string) => {
+    try {
+      const project = await db.project.findUnique({
+        where: { id },
+        include: {
+          gallery: {
+            orderBy: {
+              order: "asc",
+            },
+          },
+          translations: true,
+        },
+      });
+
+      if (!project || !project.isPublished) {
         throw new Error("Project not found");
       }
 

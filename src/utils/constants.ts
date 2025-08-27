@@ -8,6 +8,8 @@ export enum Languages {
     ARABIC = "ar",
 }
 
+export const SUPPORTED_LANGUAGES = [Languages.ENGLISH, Languages.ARABIC];
+
 export enum Routes {
     ROOT = "/",
     PROJECTS = "projects",

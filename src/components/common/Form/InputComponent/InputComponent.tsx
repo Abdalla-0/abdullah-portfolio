@@ -1,8 +1,10 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Path, FieldValues, UseFormRegister } from "react-hook-form";
-import { InputHTMLAttributes, useState } from "react";
+import { InputHTMLAttributes, TextareaHTMLAttributes, useState } from "react";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+
 type InputComponentProps<FieldValue extends FieldValues> = {
   label?: string;
   name: Path<FieldValue>;
@@ -13,8 +15,13 @@ type InputComponentProps<FieldValue extends FieldValues> = {
   className?: string;
   btnPassIconClass?: string;
   passIconClass?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-} & InputHTMLAttributes<HTMLInputElement>;
+  onChange?: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => void;
+} & (
+  | InputHTMLAttributes<HTMLInputElement>
+  | TextareaHTMLAttributes<HTMLTextAreaElement>
+);
 
 const InputComponent = <FieldValue extends FieldValues>({
   label,
@@ -26,12 +33,14 @@ const InputComponent = <FieldValue extends FieldValues>({
   className,
   btnPassIconClass,
   passIconClass,
+  placeholder,
 }: InputComponentProps<FieldValue>) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <div className="relative">
       {type === "password" && (
@@ -48,14 +57,27 @@ const InputComponent = <FieldValue extends FieldValues>({
         </button>
       )}
       {label && <Label htmlFor={name}>{label}</Label>}
-      <Input
-        type={showPassword ? "text" : type}
-        {...(register
-          ? register(name, type === "number" ? { valueAsNumber: true } : {})
-          : {})}
-        onChange={onChange}
-        className={className}
-      />
+
+      {type === "textarea" ? (
+        <Textarea
+          id={name}
+          placeholder={placeholder}
+          {...(register ? register(name) : {})}
+          onChange={onChange}
+          className={`border rounded-md p-2 w-full ${className}`}
+        />
+      ) : (
+        <Input
+          type={showPassword ? "text" : type}
+          placeholder={placeholder}
+          {...(register
+            ? register(name, type === "number" ? { valueAsNumber: true } : {})
+            : {})}
+          onChange={onChange}
+          className={className}
+        />
+      )}
+
       {error && <span className="text-red-500">{error}</span>}
     </div>
   );

@@ -8,7 +8,7 @@ import {
   actionNewProject,
   actionUpdateProject,
 } from "@/server/actions/projects";
-import { ProjectWithGallery } from "@/types/project";
+import { ProjectWithRelations } from "@/types/project";
 import { Languages, Routes } from "@/utils/constants";
 import {
   editProjectSchema,
@@ -18,23 +18,30 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useTranslations } from "use-intl";
 import TextEditor from "../TextEditor/TextEditor";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 const FormProject = ({
   type,
   project,
 }: {
-  type: string;
-  project?: ProjectWithGallery;
+  type: "new" | "update";
+  project?: ProjectWithRelations;
 }) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || Languages.ENGLISH;
+
   const {
     register,
     handleSubmit,
     reset,
     setValue,
+    control,
     watch,
     formState: { errors, isSubmitting },
   } = useForm<ProjectType>({
@@ -43,23 +50,35 @@ const FormProject = ({
         ? zodResolver(newProjectSchema())
         : zodResolver(editProjectSchema()),
     defaultValues: {
-      order: project?.order ?? undefined,
-      title: project?.title ?? "",
+      order: project?.order ?? 0,
       role: project?.role ?? "",
-      description: project?.description ?? "",
-      editorContent: project?.editorContent ?? "",
       stack: project?.stack ?? "",
       previewLink: project?.previewLink ?? "",
       githubLink: project?.githubLink ?? "",
       image: null,
       gallery: [],
+      isPublished: project?.isPublished ?? false,
+      translations: project?.translations
+        .filter((t) => t.language === locale)
+        .map((t) => ({
+          language: t.language || locale,
+          title: t.title ?? "",
+          description: t.description ?? "",
+          editorContent: t.editorContent ?? "",
+          tag: t.tag ?? "",
+        })) ?? [
+        {
+          language: locale,
+          title: "",
+          description: "",
+          editorContent: "",
+          tag: "",
+        },
+      ],
     },
   });
-
-  const router = useRouter();
-  const pathname = usePathname();
-  const locale = pathname.split("/")[1] || Languages.ENGLISH;
   const t = useTranslations();
+
   const [previewUrl, setPreviewUrl] = useState<string | null>(
     project?.image || null
   );
@@ -71,45 +90,73 @@ const FormProject = ({
   >([]);
 
   const selectedImage = watch("image");
+  const editorContent = watch(`translations.0.editorContent`);
 
   const submitForm: SubmitHandler<ProjectType> = async (data) => {
-    const formData = new FormData();
-    formData.append("editorContent", data.editorContent?? "");
-    Object.entries(data).forEach(([key, value]) => {
-      if (
-        value &&
-        key !== "image" &&
-        key !== "gallery" &&
-        key !== "editorContent"
-      ) {
-        formData.append(key, value.toString());
-      }
-    });
-
-    if (selectedImage instanceof File && selectedImage.size > 0) {
-      formData.append("image", selectedImage);
-    }
-
-    imagesData.forEach(({ file, order }) => {
-      if (file instanceof File && file.size > 0) {
-        formData.append("gallery", file);
-        formData.append("galleryOrders[]", String(order ?? 0));
-      }
-    });
-
-    formData.append("remainingExistingGallery", JSON.stringify(previewUrls));
-
     try {
+      const formData = new FormData();
+      // البيانات العامة
+      Object.entries(data).forEach(([key, value]) => {
+        if (
+          value &&
+          key !== "isPublished" &&
+          key !== "image" &&
+          key !== "gallery" &&
+          key !== "translations"
+        ) {
+          formData.append(key, value.toString());
+        }
+      });
+
+      formData.append("isPublished", String(data.isPublished));
+
+      // صورة رئيسية
+      if (selectedImage instanceof File && selectedImage.size > 0) {
+        formData.append("image", selectedImage);
+      }
+
+      // صور المعرض
+      imagesData.forEach(({ file, order }) => {
+        if (file instanceof File && file.size > 0) {
+          formData.append("gallery", file);
+          formData.append("galleryOrders[]", String(order ?? 0));
+        }
+      });
+
+      // الصور القديمة
+      formData.append("remainingExistingGallery", JSON.stringify(previewUrls));
+      // الترجمات
+      (data.translations || [])
+        .filter((t) => t.title || t.description || t.editorContent || t.tag)
+        .forEach((t, i) => {
+          formData.append(`translations[${i}][language]`, t.language);
+          formData.append(`translations[${i}][title]`, t.title ?? "");
+          formData.append(
+            `translations[${i}][description]`,
+            t.description ?? ""
+          );
+          formData.append(
+            `translations[${i}][editorContent]`,
+            t.editorContent ?? ""
+          );
+          formData.append(`translations[${i}][tag]`, t.tag ?? "");
+        });
+
       if (type === "new") {
-        await actionNewProject(formData);
+        const res = await actionNewProject(formData);
+        if (res?.status !== 200) {
+          toast.error(`Error adding Project! ${res?.message || res?.error}`);
+          console.log("Error details:", res?.message);
+          return;
+        }
         reset();
         toast.success("Project added successfully!");
-        router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}`);
       } else if (type === "update" && project) {
         await actionUpdateProject(formData, project.id, locale);
         toast.success("Project updated successfully!");
-        router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}`);
       }
+
+      router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}`);
     } catch (error) {
       toast.error(
         `Error ${type === "new" ? "adding" : "updating"} Project! ${error}`
@@ -122,6 +169,7 @@ const FormProject = ({
       className="flex flex-col md:flex-row gap-10"
       onSubmit={handleSubmit(submitForm)}
     >
+      {/* صورة المشروع */}
       <div>
         <UploadImage<ProjectType>
           setValue={setValue}
@@ -130,6 +178,8 @@ const FormProject = ({
           error={errors.image?.message}
         />
       </div>
+
+      {/* بيانات المشروع */}
       <div className="flex-1">
         <div className="space-y-2">
           <InputComponent
@@ -140,32 +190,52 @@ const FormProject = ({
             placeholder="Order"
             error={errors.order?.message}
           />
+
+          {/* حقول الترجمة الحالية */}
+
+          <input
+            type="hidden"
+            value={locale}
+            {...register(`translations.${0}.language`)}
+          />
           <InputComponent
             label="Title"
-            name="title"
+            name={`translations.${0}.title`}
             register={register}
             placeholder="Title"
-            error={errors.title?.message}
+            error={errors.translations?.[0]?.title?.message}
           />
+
           <InputComponent
+            type="textarea"
             label="Description"
-            name="description"
+            name={`translations.${0}.description`}
             register={register}
             placeholder="Description"
-            error={errors.description?.message}
+            error={errors.translations?.[0]?.description?.message}
           />
+
           <TextEditor
-            editorContent={watch("editorContent") || ""}
+            editorContent={editorContent || ""}
             onChange={(editorContent) =>
-              setValue("editorContent", editorContent)
+              setValue(`translations.0.editorContent`, editorContent)
             }
           />
-          {errors.editorContent && (
+          {errors.translations?.[0]?.editorContent && (
             <p className="text-red-500 text-sm">
-              {errors.editorContent.message}
+              {errors.translations?.[0]?.editorContent.message}
             </p>
           )}
 
+          <InputComponent
+            label="Tag"
+            name={`translations.${0}.tag`}
+            register={register}
+            placeholder="Tag"
+            error={errors.translations?.[0]?.tag?.message}
+          />
+
+          {/* باقي الحقول العامة */}
           <InputComponent
             label="Role"
             name="role"
@@ -181,25 +251,43 @@ const FormProject = ({
             error={errors.stack?.message}
           />
           <InputComponent
-            label="previewLink"
+            label="Preview Link"
             name="previewLink"
             register={register}
-            placeholder="previewLink"
+            placeholder="Preview Link"
             error={errors.previewLink?.message}
           />
           <InputComponent
-            label="githubLink"
+            label="Github Link"
             name="githubLink"
             register={register}
-            placeholder="githubLink"
+            placeholder="Github Link"
             error={errors.githubLink?.message}
           />
+
+          {/* معرض الصور */}
           <UploadImages
             setValue={setValue}
             existingImages={project?.gallery?.map((img) => img.url) || []}
             setExistingUrls={setPreviewUrls}
             setImagesData={setImagesData}
             error={errors.gallery?.message}
+          />
+          <Controller
+            name="isPublished"
+            control={control}
+            render={({ field }) => (
+              <div className="flex items-center space-x-2 !mt-5">
+                <Switch
+                  id="isPublished"
+                  checked={!!field.value}
+                  onCheckedChange={(checked) => field.onChange(checked)}
+                />
+                <Label htmlFor="isPublished" className="!mx-3">
+                  Published
+                </Label>
+              </div>
+            )}
           />
         </div>
 

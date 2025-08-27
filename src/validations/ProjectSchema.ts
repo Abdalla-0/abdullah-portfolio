@@ -1,37 +1,42 @@
 import z from "zod";
 import { imageSchema } from "./imageSchema";
-const newProjectSchema = () => {
-  return z.object({
+// import { Languages } from "@/utils/constants";
+
+const getCommonValidations = () => {
+  return {
     order: z.number().min(1, { message: "Order is required" }),
-    title: z.string().trim().min(1, { message: "Title is required" }),
     role: z.string().trim().min(1, { message: "Role is required" }),
-    description: z
-      .string()
-      .trim()
-      .min(1, { message: "Description is required" }),
-    editorContent: z.string().optional(),
     stack: z.string().trim().min(1, { message: "Satck is required" }),
     previewLink: z.string().trim().optional(),
     githubLink: z.string().trim().optional(),
-    image: imageSchema(true),
     gallery: z.array(imageSchema(true)).optional(),
+    isPublished: z.boolean(),
+  };
+};
+
+// schema لترجمة المشروع
+const projectTranslationsSchema = z.object({
+  language: z.string().trim().min(1, { message: "Language is required" }),
+  title: z.string().trim().min(1, { message: "Title is required" }),
+  description: z.string().trim().min(1, { message: "Description is required" }),
+  tag: z.string().min(1, { message: "Tag is required" }),
+  editorContent: z.string().optional(),
+});
+
+const newProjectSchema = () => {
+  return z.object({
+    ...getCommonValidations(),
+    image: imageSchema(true),
+    // حقل المصفوفة للترجمات
+    translations: z.array(projectTranslationsSchema),
   });
 };
 const editProjectSchema = () => {
   return z.object({
-    order: z.number().min(1, { message: "Order is required" }),
-    title: z.string().trim().min(1, { message: "Title is required" }),
-    role: z.string().trim().min(1, { message: "Role is required" }),
-    description: z
-      .string()
-      .trim()
-      .min(1, { message: "Description is required" }),
-    editorContent: z.string().optional(),
-    stack: z.string().trim().min(1, { message: "Satck is required" }),
-    previewLink: z.string().trim().optional(),
-    githubLink: z.string().trim().optional(),
+    ...getCommonValidations(),
     image: imageSchema(false),
-    gallery: z.array(imageSchema(true)).optional(),
+    // حقل المصفوفة للترجمات
+    translations: z.array(projectTranslationsSchema),
   });
 };
 

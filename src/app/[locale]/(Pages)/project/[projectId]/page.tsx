@@ -1,13 +1,13 @@
 import { Locale, routing } from "@/i18n/routing";
 import {
-  actionGetProjects,
-  actionGetSingleProject,
+  actionGetPublishedProjects,
+  actionGetSinglePublishedProject,
 } from "@/server/actions/projects";
 import Content from "./_components/Content";
 import Info from "./_components/Info";
 import ProjectGallery from "./_components/ProjectGallery";
 export async function generateStaticParams() {
-  const projects = await actionGetProjects();
+  const projects = await actionGetPublishedProjects();
 
   return projects.flatMap((project) =>
     routing.locales.map((locale) => ({
@@ -22,7 +22,7 @@ const ProjectPage = async ({
   params: Promise<{ locale: Locale; projectId: string }>;
 }) => {
   const { projectId } = await params;
-  const project = (await actionGetSingleProject(projectId)) ?? undefined;
+  const project = (await actionGetSinglePublishedProject(projectId)) ?? undefined;
   return (
     <div className="container">
       <div className="flex flex-col gap-10">

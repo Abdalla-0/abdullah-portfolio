@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import {
   actionDeleteSingleProject,
-  actionGetProjects,
+  actionGetAllProjects
 } from "@/server/actions/projects";
 import { Routes } from "@/utils/constants";
 import { EditIcon } from "lucide-react";
@@ -18,7 +18,7 @@ const ProjectsPage = async ({
 }) => {
   const { locale } = await params;
 
-  const projects = await actionGetProjects();
+  const projects = await actionGetAllProjects();
   const link = `/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}/${Routes.NEW}`;
   return (
     <div className="container">

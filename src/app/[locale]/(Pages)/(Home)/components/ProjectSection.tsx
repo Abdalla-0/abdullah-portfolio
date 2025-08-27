@@ -1,6 +1,6 @@
 import ProjectCard from "@/components/application/Projects/ProjectCard";
 import Heading from "@/components/common/Heading/Heading";
-import { actionGetProjects } from "@/server/actions/projects";
+import { actionGetPublishedProjects } from "@/server/actions/projects";
 import { Routes } from "@/utils/constants";
 import React from "react";
 
@@ -10,7 +10,7 @@ const ProjectSection = async ({
   params: Promise<{ locale: string }>;
 }) => {
   const { locale } = await params;
-  const projects = await actionGetProjects();
+  const projects = await actionGetPublishedProjects();
   return (
     <section id="projectsSection" className="section-gap section-bg">
       <div className="container">

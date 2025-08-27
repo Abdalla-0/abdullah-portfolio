@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 type ItemCardProps = {
-  item: { id: string; title: string; image: string };
+  item: { id: string; title?: string; image: string };
 };
 const ItemCard = ({ item }: ItemCardProps) => {
   return (
@@ -11,7 +11,7 @@ const ItemCard = ({ item }: ItemCardProps) => {
     >
       <Image
         src={item.image as string}
-        alt={item.title}
+        alt={item?.title || "image for project"}
         width={100}
         height={100}
         className="max-w-full h-[90px] object-contain mx-auto"
