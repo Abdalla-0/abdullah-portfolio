@@ -2,7 +2,7 @@ import FormProject from "@/components/application/Forms/FormProject";
 import { routing } from "@/i18n/routing";
 import {
   actionGetPublishedProjects,
-  actionGetSingleProject
+  actionGetSingleProject,
 } from "@/server/actions/projects";
 
 export async function generateStaticParams() {
@@ -18,10 +18,11 @@ export async function generateStaticParams() {
 const EditProjectPage = async ({
   params,
 }: {
-  params: Promise<{ projectId: string }>;
+  params: Promise<{ locale: string; projectId: string }>;
 }) => {
-  const { projectId } = await params;
-  const project = (await actionGetSingleProject(projectId)) ?? undefined;
+  const { projectId, locale } = await params;
+  const project =
+    (await actionGetSingleProject(projectId, locale)) ?? undefined;
 
   return (
     <div className="container">

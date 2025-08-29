@@ -25,7 +25,7 @@ export const actionGetAllProjects = cache(
 );
 
 export const actionGetPublishedProjects = cache(
-  async () => {
+  async (locale: string) => {
     try {
       const projects = await db.project.findMany({
         where: { isPublished: true },
@@ -35,7 +35,11 @@ export const actionGetPublishedProjects = cache(
               order: "asc",
             },
           },
-          translations: true,
+          translations: {
+            where: {
+              language: locale,
+            },
+          },
         },
         orderBy: {
           order: "asc",
@@ -58,7 +62,6 @@ export const actionNewProject = async (formData: FormData) => {
     order: Number(formData.get("order")),
     title: formData.get("title"),
     role: formData.get("role"),
-    description: formData.get("description"),
     editorContent: formData.get("editorContent"),
     stack: formData.get("stack"),
     previewLink: formData.get("previewLink"),
@@ -148,7 +151,6 @@ export const actionNewProject = async (formData: FormData) => {
               data: data.translations?.map((t) => ({
                 language: t.language,
                 title: t.title,
-                description: t.description,
                 editorContent: t.editorContent,
                 tag: t.tag,
               })),
@@ -183,7 +185,6 @@ export const actionUpdateProject = async (
     order: Number(formData.get("order")),
     title: formData.get("title"),
     role: formData.get("role"),
-    description: formData.get("description"),
     editorContent: formData.get("editorContent"),
     stack: formData.get("stack"),
     previewLink: formData.get("previewLink"),
@@ -305,13 +306,11 @@ export const actionUpdateProject = async (
             create: {
               language: t.language,
               title: t.title,
-              description: t.description,
               editorContent: t.editorContent,
               tag: t.tag,
             },
             update: {
               title: t.title,
-              description: t.description,
               editorContent: t.editorContent,
               tag: t.tag,
             },
@@ -339,7 +338,7 @@ export const actionUpdateProject = async (
 };
 
 export const actionGetSingleProject = cache(
-  async (id: string) => {
+  async (id: string, locale: string) => {
     try {
       const project = await db.project.findUnique({
         where: { id },
@@ -349,7 +348,11 @@ export const actionGetSingleProject = cache(
               order: "asc",
             },
           },
-          translations: true,
+          translations: {
+            where: {
+              language: locale,
+            },
+          },
         },
       });
 
@@ -367,7 +370,7 @@ export const actionGetSingleProject = cache(
   { revalidate: 3600 }
 );
 export const actionGetSinglePublishedProject = cache(
-  async (id: string) => {
+  async (id: string, locale: string) => {
     try {
       const project = await db.project.findUnique({
         where: { id },
@@ -377,7 +380,11 @@ export const actionGetSinglePublishedProject = cache(
               order: "asc",
             },
           },
-          translations: true,
+          translations: {
+            where: {
+              language: locale,
+            },
+          },
         },
       });
 

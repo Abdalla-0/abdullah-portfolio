@@ -1,10 +1,10 @@
-import { ProjectWithGallery } from "@/types/project";
+import { ProjectWithRelations } from "@/types/project";
 
 import { useTranslations } from "next-intl";
 
 import Link from "next/link";
 
-const Info = ({ project }: { project: ProjectWithGallery }) => {
+const Info = ({ project }: { project: ProjectWithRelations }) => {
   const t = useTranslations("ProjectPage.info");
   return (
     <div className="flex flex-col justify-around gap-10 border rounded-lg p-4 ">
@@ -24,7 +24,7 @@ const Info = ({ project }: { project: ProjectWithGallery }) => {
             target="_blank"
             className="underline text-primary break-words"
           >
-            {project.githubLink}
+            {t("githubLink")}
           </Link>
         </div>
       )}

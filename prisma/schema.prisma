@@ -27,7 +27,6 @@ model ProjectTranslation {
   projectId     String
   language      String @db.VarChar(8) // "en", "ar", ... ديناميكي
   title         String
-  description   String
   editorContent String
   tag           String
 

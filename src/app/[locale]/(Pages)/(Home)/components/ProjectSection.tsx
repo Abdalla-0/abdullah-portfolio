@@ -10,7 +10,7 @@ const ProjectSection = async ({
   params: Promise<{ locale: string }>;
 }) => {
   const { locale } = await params;
-  const projects = await actionGetPublishedProjects();
+  const projects = await actionGetPublishedProjects(locale);
   return (
     <section id="projectsSection" className="section-gap section-bg">
       <div className="container">

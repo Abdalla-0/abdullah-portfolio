@@ -8,12 +8,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import Image from "next/image";
+import { ProjectWithRelations } from "@/types/project";
 import { Images } from "lucide-react";
-import { ProjectWithGallery } from "@/types/project";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
-const ProjectGallery = ({ project }: { project: ProjectWithGallery }) => {
+const ProjectGallery = ({ project }: { project: ProjectWithRelations }) => {
   const t = useTranslations("ProjectPage.gallery");
   return (
     <div className="p-3 w-full h-full bg-gray-200 flex flex-col rounded-lg">

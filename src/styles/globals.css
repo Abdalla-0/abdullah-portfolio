@@ -178,3 +178,8 @@
 
 
 }
+
+.tiptap p:empty::before {
+  content: '';
+  display: inline-block;
+}

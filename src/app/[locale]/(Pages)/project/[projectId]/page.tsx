@@ -6,8 +6,12 @@ import {
 import Content from "./_components/Content";
 import Info from "./_components/Info";
 import ProjectGallery from "./_components/ProjectGallery";
-export async function generateStaticParams() {
-  const projects = await actionGetPublishedProjects();
+export async function generateStaticParams({
+  params,
+}: {
+  params: { locale: Locale };
+}) {
+  const projects = await actionGetPublishedProjects(params.locale);
 
   return projects.flatMap((project) =>
     routing.locales.map((locale) => ({
@@ -22,11 +26,16 @@ const ProjectPage = async ({
   params: Promise<{ locale: Locale; projectId: string }>;
 }) => {
   const { projectId } = await params;
-  const project = (await actionGetSinglePublishedProject(projectId)) ?? undefined;
+
+  const project =
+    (await actionGetSinglePublishedProject(projectId, (await params).locale)) ??
+    undefined;
   return (
     <div className="container">
       <div className="flex flex-col gap-10">
-        <h1 className="text-6xl text-center font-medium">{project.title}</h1>
+        <h1 className="text-6xl text-center font-medium">
+          {project.translations[0].title}
+        </h1>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <Info project={project} />
           <ProjectGallery project={project} />

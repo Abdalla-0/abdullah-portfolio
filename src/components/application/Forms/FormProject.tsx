@@ -58,19 +58,15 @@ const FormProject = ({
       image: null,
       gallery: [],
       isPublished: project?.isPublished ?? false,
-      translations: project?.translations
-        .filter((t) => t.language === locale)
-        .map((t) => ({
-          language: t.language || locale,
-          title: t.title ?? "",
-          description: t.description ?? "",
-          editorContent: t.editorContent ?? "",
-          tag: t.tag ?? "",
-        })) ?? [
+      translations: project?.translations.map((t) => ({
+        language: t.language || locale,
+        title: t.title ?? "",
+        editorContent: t.editorContent ?? "",
+        tag: t.tag ?? "",
+      })) ?? [
         {
           language: locale,
           title: "",
-          description: "",
           editorContent: "",
           tag: "",
         },
@@ -127,14 +123,10 @@ const FormProject = ({
       formData.append("remainingExistingGallery", JSON.stringify(previewUrls));
       // الترجمات
       (data.translations || [])
-        .filter((t) => t.title || t.description || t.editorContent || t.tag)
+        .filter((t) => t.title || t.editorContent || t.tag)
         .forEach((t, i) => {
           formData.append(`translations[${i}][language]`, t.language);
           formData.append(`translations[${i}][title]`, t.title ?? "");
-          formData.append(
-            `translations[${i}][description]`,
-            t.description ?? ""
-          );
           formData.append(
             `translations[${i}][editorContent]`,
             t.editorContent ?? ""
@@ -204,15 +196,6 @@ const FormProject = ({
             register={register}
             placeholder="Title"
             error={errors.translations?.[0]?.title?.message}
-          />
-
-          <InputComponent
-            type="textarea"
-            label="Description"
-            name={`translations.${0}.description`}
-            register={register}
-            placeholder="Description"
-            error={errors.translations?.[0]?.description?.message}
           />
 
           <TextEditor

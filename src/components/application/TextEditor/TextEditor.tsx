@@ -1,14 +1,12 @@
 "use client";
 
+import Highlight from "@tiptap/extension-highlight";
+import { Image } from "@tiptap/extension-image";
+import TextAlign from "@tiptap/extension-text-align";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import MenuBar from "./MenuBar";
-import TextAlign from "@tiptap/extension-text-align";
-import Highlight from "@tiptap/extension-highlight";
-import { Image } from "@tiptap/extension-image";
 import "./text-editor.css";
-
-
 
 interface RichTextEditorProps {
   editorContent: string;
