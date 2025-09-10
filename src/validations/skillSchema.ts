@@ -3,14 +3,12 @@ import { imageSchema } from "./imageSchema";
 const newSkillSchema = () => {
   return z.object({
     order: z.number().min(1, { message: "Order is required" }),
-    title: z.string().trim().min(1, { message: "Title is required" }),
     image: imageSchema(true)
   });
 };
 const editSkillSchema = () => {
   return z.object({
     order: z.number().min(1, { message: "Order is required" }),
-    title: z.string().trim().min(1, { message: "Title is required" }),
     image: imageSchema(false)
   });
 };

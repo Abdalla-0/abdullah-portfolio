@@ -62,7 +62,7 @@ export const actionNewSkill = async (formData: FormData) => {
         data: {
           ...data,
           order: data.order,
-          title: data.title,
+          // title: data.title,
           image: imageUrl,
         },
       });

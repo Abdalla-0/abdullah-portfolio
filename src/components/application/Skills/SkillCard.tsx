@@ -9,12 +9,11 @@ const SkillCard = ({ skill }: { skill: Skill }) => {
     >
       <Image
         src={skill.image as string}
-        alt={skill.title}
+        alt={"Skill Image"}
         width={100}
         height={100}
         className="max-w-full h-[90px] object-contain mx-auto"
       />
-      <h2 className="mt-2 text-center font-bold text-lg">{skill.title}</h2>
     </div>
   );
 };

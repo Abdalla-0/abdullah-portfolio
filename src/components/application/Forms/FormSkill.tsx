@@ -32,8 +32,7 @@ const FormSkill = ({ type, skill }: { type: string; skill?: Skill }) => {
         ? zodResolver(newSkillSchema())
         : zodResolver(editSkillSchema()),
     defaultValues: {
-      order: skill?.order ?? undefined,
-      title: skill?.title ?? "",
+      order: skill?.order ?? 0,
       image: null,
     },
   });
@@ -99,14 +98,7 @@ const FormSkill = ({ type, skill }: { type: string; skill?: Skill }) => {
             register={register}
             placeholder="Order"
             error={errors.order?.message}
-          />
-          <InputComponent
-            label="Title"
-            name="title"
-            register={register}
-            placeholder="Title"
-            error={errors.title?.message}
-          />
+          /> 
         </div>
 
         <div className="grid mt-10 space-y-3">
