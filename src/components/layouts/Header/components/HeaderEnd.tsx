@@ -1,4 +1,4 @@
-import LocaleSwitcher from "@/components/common/LocaleSwitcher/LocaleSwitcher";
+import LocaleSwitcher from "@/components/shared/LocaleSwitcher/LocaleSwitcher";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
 

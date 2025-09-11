@@ -14,7 +14,7 @@ const AdsSection = () => {
         </div>
         <a
           href="#contactSection"
-          className="btn-primary text-lg h-[50px] px-6"
+          className="btn btn-primary text-lg h-[50px] px-6"
         >
           {t("cta")}
         </a>

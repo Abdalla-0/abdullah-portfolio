@@ -33,7 +33,7 @@ export default function LocaleSwitcher() {
       defaultValue={locale}
       disabled={isPending}
     >
-      <SelectTrigger className="btn-primary-tint-95">
+      <SelectTrigger className="btn btn-primary-tint-95">
         <SelectValue placeholder="Lang" />
       </SelectTrigger>
       <SelectContent>

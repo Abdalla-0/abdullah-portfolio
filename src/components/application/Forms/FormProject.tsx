@@ -1,8 +1,8 @@
 "use client";
-import BackButton from "@/components/common/BackButton/BackButton";
-import InputComponent from "@/components/common/Form/InputComponent/InputComponent";
-import UploadImage from "@/components/common/Form/UploadImage/UploadImage";
-import UploadImages from "@/components/common/Form/UploadImages/UploadImages";
+import BackButton from "@/components/shared/Buttons/BackButton/BackButton";
+import InputComponent from "@/components/shared/Form/InputComponent/InputComponent";
+import UploadImage from "@/components/shared/Form/UploadImage/UploadImage";
+import UploadImages from "@/components/shared/Form/UploadImages/UploadImages";
 import { Button } from "@/components/ui/button";
 import {
   actionNewProject,

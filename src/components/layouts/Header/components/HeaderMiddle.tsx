@@ -20,7 +20,7 @@ const HeaderMiddle = () => {
           <Link
             key={link.href}
             href={link.href}
-            className="relative text-primary font-medium flex flex-col items-center text-sm sm:flex-row sm:gap-1 sm:hover:before:w-full sm:hover:before:[inset-inline-start:0] sm:before:absolute sm:before:-bottom-1 sm:before:duration-300 sm:before:[inset-inline-end:0] sm:before:w-0 sm:before:h-0.5 sm:before:bg-primary sm:before:transition-all"
+            className="relative text-primary title-font flex flex-col items-center text-sm sm:flex-row sm:gap-1 sm:hover:before:w-full sm:hover:before:[inset-inline-start:0] sm:before:absolute sm:before:-bottom-1 sm:before:duration-300 sm:before:[inset-inline-end:0] sm:before:w-0 sm:before:h-0.5 sm:before:bg-primary sm:before:transition-all"
           >
             <link.icon className="text-lg sm:hidden" />
             {t(link.label)}

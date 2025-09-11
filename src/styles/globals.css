@@ -49,9 +49,74 @@
   }
 
   /* reset elements  */
+
   * {
     box-sizing: border-box;
-    /* font-family: "Lato Regular"; */
+    margin: 0;
+    padding: 0;
+    /* font-family: var(--font-work-sans), sans-serif; */
+  }
+
+  h1,
+  .h1,
+  h2,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    font-weight: 700;
+    font-family: "TT Phobos Trial";
+  }
+
+  button,
+  .btn {
+    border: none;
+    font-weight: 500;
+    font-family: "TT Phobos Trial";
+  }
+
+  .title-font {
+    font-weight: 600;
+    font-family: "TT Phobos Trial";
+  }
+
+
+  /* AR */
+  body.ar * {
+    font-family: var(--font-tajawal), sans-serif;
+  }
+
+  body.ar :is(h1,
+    .h1,
+    h2,
+    .h2,
+    h3,
+    .h3,
+    h4,
+    .h4,
+    h5,
+    .h5,
+    h6,
+    .h6) {
+    font-weight: 700;
+    font-family: var(--font-cairo), sans-serif;
+  }
+
+  body.ar .title-font {
+    font-weight: 600;
+    font-family: var(--font-cairo), sans-serif;
+  }
+
+  body.ar button,
+  .btn {
+    border: none;
+    font-weight: 500;
+    font-family: var(--font-cairo), sans-serif;
   }
 
   a {
@@ -63,22 +128,6 @@
     display: inline-flex;
   }
 
-  button {
-    border: none;
-    font-family: "TT Phobos Trial";
-    font-weight: 600;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0;
-    padding: 0;
-    font-family: "TT Phobos Trial";
-  }
 
   .tiptap image {
     max-width: 200px;
@@ -114,11 +163,11 @@
   }
 
   .btn-primary {
-    @apply bg-primary hover:bg-primaryShade10 duration-300 px-4 py-2 md:px-7 md:py-2.5 text-text !font-semibold !rounded-full transition-all
+    @apply bg-primary hover:bg-primaryShade10 duration-300 px-4 py-2 md:px-7 md:py-2.5 text-text !rounded-full transition-all
   }
 
   .btn-primary-tint-95 {
-    @apply bg-primaryTint95 hover:bg-primaryTint90 duration-300 px-4 py-2 md:px-7 md:py-2.5 !font-semibold !rounded-full transition-all
+    @apply bg-primaryTint95 hover:bg-primaryTint90 duration-300 px-4 py-2 md:px-7 md:py-2.5 !rounded-full transition-all
   }
 
   .btn-gallery.btn-prev {
@@ -166,8 +215,6 @@
 @layer base {
   * {
     @apply border-border;
-
-
   }
 
   body {

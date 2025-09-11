@@ -1,5 +1,5 @@
 import ProjectCard from "@/components/application/Projects/ProjectCard";
-import Heading from "@/components/common/Heading/Heading";
+import Heading from "@/components/shared/Heading/Heading";
 import { actionGetPublishedProjects } from "@/server/actions/projects";
 import { Routes } from "@/utils/constants";
 import React from "react";

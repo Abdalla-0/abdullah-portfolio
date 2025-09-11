@@ -1,6 +1,6 @@
 "use client";
 
-import InputComponent from "@/components/common/Form/InputComponent/InputComponent";
+import InputComponent from "@/components/shared/Form/InputComponent/InputComponent";
 import { actionLogin } from "@/server/actions/auth";
 import { loginSchema, loginType } from "@/validations/loginSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -57,7 +57,7 @@ const LoginPage = () => {
             />
             <button
               type="submit"
-              className="btn-primary absolute end-0 top-0 h-[36px] w-[130px] element-center"
+              className="btn btn-primary absolute end-0 top-0 h-[36px] w-[130px] element-center"
               disabled={isSubmitting}
             >
               {isSubmitting ? t("loading") : t("login")}

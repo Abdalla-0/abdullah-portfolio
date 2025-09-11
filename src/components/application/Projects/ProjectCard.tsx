@@ -45,7 +45,7 @@ const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
         <p className="text-sm text-gray-600 mt-2 line-clamp-2 min-h-[40px]">
           <span className="font-bold">Stack:</span> {project.stack}
         </p>
-        <Button className="text-sm btn-primary mt-3">{t("btnAction")}</Button>
+        <Button className="btn btn-primary text-sm mt-3">{t("btnAction")}</Button>
       </div>
     </Link>
   );

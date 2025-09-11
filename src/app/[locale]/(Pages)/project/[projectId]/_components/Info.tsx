@@ -33,7 +33,7 @@ const Info = ({ project }: { project: ProjectWithRelations }) => {
           <Link
             target="_blank"
             href={project.previewLink as string}
-            className="btn-primary"
+            className="btn btn-primary"
           >
             {t("livePreview")}
           </Link>

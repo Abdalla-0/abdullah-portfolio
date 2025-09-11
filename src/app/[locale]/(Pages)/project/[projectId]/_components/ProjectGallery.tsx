@@ -29,7 +29,7 @@ const ProjectGallery = ({ project }: { project: ProjectWithRelations }) => {
         <Dialog>
           <form>
             <DialogTrigger asChild>
-              <Button className="btn-primary bg-gray-500 px-10 element-center gap-2">
+              <Button className="btn btn-primary bg-gray-500 px-10 element-center gap-2">
                 {t("btnAction")}
                 <Images size={20} />
               </Button>

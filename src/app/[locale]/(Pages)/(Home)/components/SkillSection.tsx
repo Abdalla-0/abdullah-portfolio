@@ -1,5 +1,5 @@
 import SkillCard from "@/components/application/Skills/SkillCard";
-import Heading from "@/components/common/Heading/Heading";
+import Heading from "@/components/shared/Heading/Heading";
 import { actionGetSkills } from "@/server/actions/skills";
 
 const SkillSection = async () => {

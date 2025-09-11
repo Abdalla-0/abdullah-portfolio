@@ -33,7 +33,7 @@ function DashboardTabs({ locale }: { locale: string }) {
               href={`/${locale}/${Routes.DASHBOARD}/${tab.href}`}
               className={`px-6 py-2 rounded-lg transition duration-300 ${
                 currentTab === tab.href
-                  ? "btn-primary !rounded-lg"
+                  ? "btn btn-primary !rounded-lg"
                   : "bg-primaryTint90 hover:bg-primaryTint80"
               }`}
             >
