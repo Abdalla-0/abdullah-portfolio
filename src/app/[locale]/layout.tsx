@@ -4,19 +4,15 @@ import Header from "@/components/layouts/Header/Header";
 import ScrollTopButton from "@/components/shared/Buttons/ScrollTopButton/ScrollTopButton";
 import Settings from "@/components/shared/Settings/Settings";
 import { routing } from "@/i18n/routing";
-import "@/styles/globals.css";
 import { Directions, Languages } from "@/utils/constants";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import {
-  Cairo,
-  Tajawal,
-  Work_Sans
-} from "next/font/google";
+import { Cairo, Russo_One, Sora, Tajawal, Work_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { ToastContainer } from "react-toastify";
-
+import "@/styles/style.css";
+// arabic fonts
 const cairo = Cairo({
   subsets: ["latin"],
   weight: ["400", "500", "700", "900"],
@@ -29,12 +25,23 @@ const tajawal = Tajawal({
   variable: "--font-tajawal",
 });
 
+// english fonts
 const workSans = Work_Sans({
   subsets: ["latin"],
   weight: ["400", "700"],
   variable: "--font-work-sans",
 });
 
+const russo = Russo_One({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-russo",
+});
+const sora = Sora({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-sora",
+});
 
 export const metadata: Metadata = {
   title: "Abdalla Atef | Frontend Developer & UI/UX Designer",
@@ -69,8 +76,8 @@ export default async function RootLayout({
         className={`${
           locale === Languages.ARABIC
             ? `${cairo.variable} ${tajawal.variable}`
-            : workSans.variable
-        } ${locale === Languages.ARABIC && "ar"}`}
+            : `${workSans.variable} ${sora.variable}`
+        } ${locale === Languages.ARABIC && "ar"} ${russo.variable}`}
       >
         <NextIntlClientProvider messages={messages}>
           <div className="relative before:absolute before:top-0 before:left-1/2 before:-translate-x-1/2 before:w-full before:h-[700px] before:bg-gradient-to-b before:from-[color-mix(in_srgb,var(--color-primary),white_90%)] before:to-transparent before:z-[-1]">

@@ -18,6 +18,7 @@ const getSharedValidations = () => {
 const projectTranslationsSchema = z.object({
   language: z.string().trim().min(1, { message: "Language is required" }),
   title: z.string().trim().min(1, { message: "Title is required" }),
+  description: z.string().min(1, { message: "Description is required" }),
   tag: z.string().min(1, { message: "Tag is required" }),
   editorContent: z.string().min(1, { message: "Description is required" }),
 });

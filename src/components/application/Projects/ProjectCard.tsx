@@ -1,53 +1,47 @@
-import { Button } from "@/components/ui/button";
-import {  ProjectWithRelations } from "@/types/project";
-import { useTranslations } from "next-intl";
+import { ProjectWithRelations } from "@/types/project";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
 type ProjectCardProps = {
   projectLink: string;
   project: ProjectWithRelations;
 };
 const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
-  const t = useTranslations("HomePage.ProjectsSection");
   return (
-    <Link
-      href={projectLink}
-      target="_blank"
-      className="group relative p-2 border border-primary transition-all duration-500 hover:shadow-lg rounded-lg"
-    >
-      <div className="relative block overflow-hidden">
-        {/* صورة الخلفية التي تظهر عند الـ hover */}
+    <div className="group mb-10 relative z-10 shadow-primaryTint80 hover:shadow-primaryTint80 shadow-md hover:shadow-xl rounded-lg transition-all duration-500 overflow-hidden h-[400px] lg:h-[500px]">
+      <Link
+        href={projectLink}
+        target="_blank"
+        className="relative block w-full h-full"
+      >
         <Image
           src={project.image}
           alt={project.translations[0].title}
-          className="absolute inset-0 w-full h-60 object-cover scale-150 opacity-0 blur-md transition-all duration-500 group-hover:opacity-100 group-hover:scale-100 group-hover:blur-0"
+          className="w-full h-full object-cover"
           width={0}
           height={240}
           sizes="100vw"
         />
-        {/* الصورة الأساسية */}
-        <Image
-          src={project.image}
-          alt={project.translations[0].title}
-          className="w-full h-60 object-cover transition-all duration-500 group-hover:opacity-0"
-          width={0}
-          height={240}
-          sizes="100vw"
-        />
-      </div>
-      <div className="p-4">
-        <h2 className="text-lg font-semibold">
-          <div className="hover:text-primary transition-colors duration-300">
-            {project.translations[0].title}
+      </Link>
+      <Link
+        href={projectLink}
+        className="grid p-3 lg:p-5 mx-3 lg:mx-5 absolute bottom-4 lg:opacity-0 lg:invisible inset-x-0 lg:translate-y-4 group-hover:translate-y-0 group-hover:visible group-hover:opacity-100 rounded-2xl  text-white bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-primary-shade-40)] transition-all duration-300"
+      >
+        <div className="grid gap-2">
+          <div className="flex items-center justify-between">
+            <h3 className="text-3xl font-semibold line-clamp-1">
+              {project.translations[0].title}
+            </h3>
+            <span className="px-1 animate-bounce-x ar:animate-bounce-x-ar">
+              <ArrowRight className="w-7 h-7" />
+            </span>
           </div>
-        </h2>
-        <p className="text-sm text-gray-600 mt-2 line-clamp-2 min-h-[40px]">
-          <span className="font-bold">Stack:</span> {project.stack}
-        </p>
-        <Button className="btn btn-primary text-sm mt-3">{t("btnAction")}</Button>
-      </div>
-    </Link>
+          <p className="text-lg line-clamp-1">
+            {project.translations[0].description}
+          </p>
+        </div>
+      </Link>
+    </div>
   );
 };
 

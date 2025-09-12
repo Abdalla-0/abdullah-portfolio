@@ -6,12 +6,14 @@
   :root {
     /* colors  */
     --color-primary: hsl(270, 50%, 47%);
-    --color-primary-tint-30: color-mix(in srgb, var(--color-primary), white 30%);
-    --color-primary-tint-80: color-mix(in srgb, var(--color-primary), white 80%);
-    --color-primary-tint-90: color-mix(in srgb, var(--color-primary), white 90%);
     --color-primary-tint-95: color-mix(in srgb, var(--color-primary), white 95%);
+    --color-primary-tint-90: color-mix(in srgb, var(--color-primary), white 90%);
+    --color-primary-tint-80: color-mix(in srgb, var(--color-primary), white 80%);
+    --color-primary-tint-30: color-mix(in srgb, var(--color-primary), white 30%);
     --color-primary-shade-10: color-mix(in srgb, var(--color-primary), black 10%);
     --color-primary-shade-20: color-mix(in srgb, var(--color-primary), black 20%);
+    --color-primary-shade-40: color-mix(in srgb, var(--color-primary), black 40%);
+    --color-primary-shade-50: color-mix(in srgb, var(--color-primary), black 50%);
 
     --color-text: "#ffffff";
     --nav-height: "";
@@ -54,7 +56,30 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    /* font-family: var(--font-work-sans), sans-serif; */
+  }
+
+
+  body {
+    --font-heading: var(--font-sora), "TT Phobos Trial", sans-serif;
+    --font-body: var(--font-work-sans), sans-serif;
+  }
+
+  /* AR */
+  body.ar {
+    --font-heading: var(--font-cairo), sans-serif;
+    --font-body: var(--font-tajawal), sans-serif;
+
+    .rotate-in-ar {
+      transform: rotate(-90deg) translateX(25%);
+      ;
+    }
+  }
+
+  body,
+  p,
+  span,
+  li {
+    font-family: var(--font-body);
   }
 
   h1,
@@ -70,53 +95,20 @@
   h6,
   .h6 {
     font-weight: 700;
-    font-family: "TT Phobos Trial";
+    font-family: var(--font-heading);
   }
 
   button,
   .btn {
     border: none;
     font-weight: 500;
-    font-family: "TT Phobos Trial";
+    font-family: var(--font-heading);
   }
+
 
   .title-font {
     font-weight: 600;
-    font-family: "TT Phobos Trial";
-  }
-
-
-  /* AR */
-  body.ar * {
-    font-family: var(--font-tajawal), sans-serif;
-  }
-
-  body.ar :is(h1,
-    .h1,
-    h2,
-    .h2,
-    h3,
-    .h3,
-    h4,
-    .h4,
-    h5,
-    .h5,
-    h6,
-    .h6) {
-    font-weight: 700;
-    font-family: var(--font-cairo), sans-serif;
-  }
-
-  body.ar .title-font {
-    font-weight: 600;
-    font-family: var(--font-cairo), sans-serif;
-  }
-
-  body.ar button,
-  .btn {
-    border: none;
-    font-weight: 500;
-    font-family: var(--font-cairo), sans-serif;
+    font-family: var(--font-heading);
   }
 
   a {
@@ -229,4 +221,10 @@
 .tiptap p:empty::before {
   content: '';
   display: inline-block;
+}
+
+/* rest swiper css  */
+
+.swiper-button-disabled {
+  opacity: 0.5;
 }

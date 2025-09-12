@@ -27,6 +27,7 @@ model ProjectTranslation {
   projectId     String
   language      String @db.VarChar(8)
   title         String
+  description   String @default("")
   editorContent String
   tag           String
 

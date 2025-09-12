@@ -7,10 +7,10 @@ const Content = ({ project }: { project: ProjectWithRelations }) => {
     <div>
       <h3 className="text-2xl font-semibold">{t("aboutProject")}</h3>
       <div
+        className="tiptap"
         dangerouslySetInnerHTML={{
           __html: project.translations[0].editorContent ?? "",
         }}
-        className="tiptap"
       />
     </div>
   );

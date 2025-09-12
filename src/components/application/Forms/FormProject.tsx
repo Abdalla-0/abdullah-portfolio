@@ -61,6 +61,7 @@ const FormProject = ({
       translations: project?.translations.map((t) => ({
         language: t.language || locale,
         title: t.title ?? "",
+        description: t.description ?? "",
         editorContent: t.editorContent ?? "",
         tag: t.tag ?? "",
       })) ?? [
@@ -127,6 +128,7 @@ const FormProject = ({
         .forEach((t, i) => {
           formData.append(`translations[${i}][language]`, t.language);
           formData.append(`translations[${i}][title]`, t.title ?? "");
+          formData.append(`translations[${i}][description]`, t.description ?? "");
           formData.append(
             `translations[${i}][editorContent]`,
             t.editorContent ?? ""
@@ -196,6 +198,15 @@ const FormProject = ({
             register={register}
             placeholder="Title"
             error={errors.translations?.[0]?.title?.message}
+          />
+
+          <InputComponent
+            label="Description"
+            name={`translations.${0}.description`}
+            register={register}
+            placeholder="Description"
+            type="textarea"
+            error={errors.translations?.[0]?.description?.message}
           />
 
           <TextEditor

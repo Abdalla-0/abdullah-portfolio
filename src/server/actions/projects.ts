@@ -61,6 +61,7 @@ export const actionNewProject = async (formData: FormData) => {
     translations: parseTranslationsFromFormData(formData, SUPPORTED_LANGUAGES),
     order: Number(formData.get("order")),
     title: formData.get("title"),
+    description: formData.get("description"),
     role: formData.get("role"),
     editorContent: formData.get("editorContent"),
     stack: formData.get("stack"),
@@ -151,6 +152,7 @@ export const actionNewProject = async (formData: FormData) => {
               data: data.translations?.map((t) => ({
                 language: t.language,
                 title: t.title,
+                description: t.description,
                 editorContent: t.editorContent,
                 tag: t.tag,
               })),
@@ -184,6 +186,7 @@ export const actionUpdateProject = async (
     translations: parseTranslationsFromFormData(formData, SUPPORTED_LANGUAGES),
     order: Number(formData.get("order")),
     title: formData.get("title"),
+    description: formData.get("description"),
     role: formData.get("role"),
     editorContent: formData.get("editorContent"),
     stack: formData.get("stack"),
@@ -194,7 +197,6 @@ export const actionUpdateProject = async (
     remainingExistingGallery: formData.get("remainingExistingGallery"),
     isPublished: formData.get("isPublished") === "true",
   };
-  console.log("isPublished", raw.isPublished);
   const result = editProjectSchema().safeParse(raw);
   if (!result.success) {
     console.error("Validation error in actionUpdateProject:", result.error);
@@ -306,11 +308,13 @@ export const actionUpdateProject = async (
             create: {
               language: t.language,
               title: t.title,
+              description: t.description,
               editorContent: t.editorContent,
               tag: t.tag,
             },
             update: {
               title: t.title,
+              description: t.description,
               editorContent: t.editorContent,
               tag: t.tag,
             },

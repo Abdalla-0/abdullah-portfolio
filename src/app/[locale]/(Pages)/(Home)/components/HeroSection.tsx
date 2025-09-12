@@ -12,7 +12,7 @@ const HeroSection = () => {
     <div
       id="heroSection"
       className="-mt-4 relative pt-8 pb-24 md:pt-20 before:absolute before:top-[-124px] before:left-1/2 before:-translate-x-1/2 before:w-full before:h-[700px] before:bg-gradient-to-b before:from-[color-mix(in_srgb,var(--color-primary),white_90%)] before:to-transparent before:z-[-1]
-      after:content-['HI'] after:absolute after:opacity-20 after:start-[20%] after:top-[10%] after:-translate-x-1/2 after:text-[200px] after:font-[Russo_One,sans-serif] after:z-[-1] after:text-transparent after:[-webkit-text-stroke-width:2px] after:[-webkit-text-stroke-color:var(--color-primary)] after:opacity-16 after:animate-scaleBounce ltr:after:start-[20%] rtl:after:end-[80%]
+      after:content-['HI'] after:font-russo after:absolute after:opacity-20 after:start-[20%] after:top-[10%] after:-translate-x-1/2 after:text-[200px] after:z-[-1] after:text-transparent after:[-webkit-text-stroke-width:2px] after:[-webkit-text-stroke-color:var(--color-primary)] after:opacity-16 after:animate-scaleBounce ltr:after:start-[20%] rtl:after:end-[80%]
       "
     >
       <div className="container">
@@ -22,11 +22,11 @@ const HeroSection = () => {
             <h3 className="text-start text-4xl font-semibold">
               {t("greeting")}
             </h3>
-            <h2
-              className={`text-[40px] lg:text-[57px] xl:text-[65px] 2xl:text-[80px] font-bold bg-gradient-to-r rtl:bg-gradient-to-l from-[var(--color-primary)] to-[rgba(0,0,0,0.2)] bg-clip-text text-transparent leading-tight`}
+            <h1
+              className={`font-phobos text-[47px] md:text-[60px] xl:text-[69px] 2xl:text-[80px] font-bold bg-gradient-to-r rtl:bg-gradient-to-l from-[var(--color-primary)] to-[rgba(0,0,0,0.2)] bg-clip-text text-transparent leading-tight`}
             >
               {t("role")}
-            </h2>
+            </h1>
             <p className="text-gray-600 text-lg">{t("description")}</p>
             <div className="flex flex-wrap items-center gap-4 mt-4">
               <Link
