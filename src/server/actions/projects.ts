@@ -7,7 +7,11 @@ import {
 } from "@/validations/ProjectSchema";
 import { revalidatePath, revalidateTag } from "next/cache";
 import getImageUrl from "../getImageUrl";
-import { Routes, SUPPORTED_LANGUAGES } from "@/utils/constants";
+import {
+  RECORDS_PER_PAGE,
+  Routes,
+  SUPPORTED_LANGUAGES,
+} from "@/utils/constants";
 import { parseTranslationsFromFormData } from "@/utils/parseTranslationsFromFormData";
 
 export const actionGetAllProjects = cache(
@@ -24,37 +28,76 @@ export const actionGetAllProjects = cache(
   { revalidate: false, tags: ["projects"] }
 );
 
-export const actionGetPublishedProjects = cache(
-  async (locale: string) => {
+/**
+ * @description  get projects by age number
+ * @access  public
+ * @params  pageNumber: number
+ **/
+
+export const actionGetPublishedProgects = cache(
+  async (local: string) => {
     try {
       const projects = await db.project.findMany({
         where: { isPublished: true },
         include: {
-          gallery: {
-            orderBy: {
-              order: "asc",
-            },
-          },
+          gallery: { orderBy: { order: "asc" } },
           translations: {
             where: {
-              language: locale,
+              language: local,
             },
           },
         },
-        orderBy: {
-          order: "asc",
-        },
+        orderBy: { order: "asc" },
       });
-
       return projects;
     } catch (error) {
       console.error("Error fetching projects:", error);
       throw new Error("Failed to fetch projects");
     }
   },
-  ["projects"],
+  ["projects-by-page"],
   { revalidate: false, tags: ["projects"] }
 );
+export const actionGetPublishedProgectsByPageNumber = cache(
+  async (local: string, pageNumber: number = 1) => {
+    try {
+      const projects = await db.project.findMany({
+        where: { isPublished: true },
+        include: {
+          gallery: { orderBy: { order: "asc" } },
+          translations: {
+            where: {
+              language: local,
+            },
+          },
+        },
+        orderBy: { order: "asc" },
+        skip: (pageNumber - 1) * RECORDS_PER_PAGE,
+        take: RECORDS_PER_PAGE,
+      });
+      return projects;
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+      throw new Error("Failed to fetch projects");
+    }
+  },
+  ["projects-by-page"],
+  { revalidate: false, tags: ["projects"] }
+);
+
+export const actionGetPublishedProjectsCount = async () => {
+  try {
+    const publishedProjectsCount = await db.project.count({
+      where: {
+        isPublished: true,
+      },
+    });
+    return publishedProjectsCount;
+  } catch (error) {
+    console.error("Error fetching projects count:", error);
+    throw new Error("Failed to fetch projects count");
+  }
+};
 
 export const actionNewProject = async (formData: FormData) => {
   const raw = {

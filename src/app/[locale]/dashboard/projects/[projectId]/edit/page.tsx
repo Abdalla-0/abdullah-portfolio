@@ -1,7 +1,7 @@
 import FormProject from "@/components/application/Forms/FormProject";
 import { Locale, routing } from "@/i18n/routing";
 import {
-  actionGetPublishedProjects,
+  actionGetPublishedProgectsByPageNumber,
   actionGetSingleProject,
 } from "@/server/actions/projects";
 
@@ -10,7 +10,7 @@ export async function generateStaticParams({
 }: {
   params: { locale: Locale };
 }) {
-  const projects = await actionGetPublishedProjects(params.locale);
+  const projects = await actionGetPublishedProgectsByPageNumber(params.locale);
 
   return projects.flatMap((project) =>
     routing.locales.map((locale) => ({

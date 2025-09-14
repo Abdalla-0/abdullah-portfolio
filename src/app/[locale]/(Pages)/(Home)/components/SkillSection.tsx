@@ -8,7 +8,7 @@ const SkillSection = async () => {
   return (
     <section id="skillsSection" className="section-gap section-bg">
       <div className="container">
-        <Heading textKey={`skills`} />
+        <Heading title={`skills`} />
         <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4`}>
           {skills &&
             skills.map((skill) => <SkillCard key={skill.id} skill={skill} />)}

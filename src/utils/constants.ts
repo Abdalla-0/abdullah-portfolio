@@ -10,6 +10,8 @@ export enum Languages {
 
 export const SUPPORTED_LANGUAGES = [Languages.ENGLISH, Languages.ARABIC];
 
+export const RECORDS_PER_PAGE = 3;
+
 export enum Routes {
     ROOT = "/",
     PROJECTS = "projects",

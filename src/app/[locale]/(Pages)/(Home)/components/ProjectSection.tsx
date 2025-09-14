@@ -2,7 +2,7 @@ import SwiperButton from "@/components/application/Buttons/SwiperButton";
 import ProjectCard from "@/components/application/Projects/ProjectCard";
 import Heading from "@/components/shared/Heading/Heading";
 import SwiperComponent from "@/components/shared/Swiper/SwiperComponent";
-import { actionGetPublishedProjects } from "@/server/actions/projects";
+import { actionGetPublishedProgects } from "@/server/actions/projects";
 import { Routes } from "@/utils/constants";
 import Link from "next/link";
 const ProjectSection = async ({
@@ -11,7 +11,7 @@ const ProjectSection = async ({
   params: Promise<{ locale: string }>;
 }) => {
   const { locale } = await params;
-  const projects = await actionGetPublishedProjects(locale);
+  const projects = await actionGetPublishedProgects(locale);
   return (
     <section id="projectsSection" className="section-gap section-bg relative">
       <div className="px-4 md:px-6">
@@ -26,7 +26,7 @@ const ProjectSection = async ({
               direction="end"
             />
           </div>
-          <Heading textKey={`projects`} classExtra="pb-0" />
+          <Heading title={`projects`} className="pb-0" />
           <Link
             href={`/${locale}/${Routes.PROJECTS}`}
             className="btn btn-primary text-xs md:text-base"

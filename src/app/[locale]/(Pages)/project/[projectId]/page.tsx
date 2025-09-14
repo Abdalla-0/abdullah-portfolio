@@ -1,6 +1,6 @@
 import { Locale, routing } from "@/i18n/routing";
 import {
-  actionGetPublishedProjects,
+  actionGetPublishedProgectsByPageNumber,
   actionGetSinglePublishedProject,
 } from "@/server/actions/projects";
 import Content from "./_components/Content";
@@ -11,7 +11,7 @@ export async function generateStaticParams({
 }: {
   params: { locale: Locale };
 }) {
-  const projects = await actionGetPublishedProjects(params.locale);
+  const projects = await actionGetPublishedProgectsByPageNumber(params.locale);
 
   return projects.flatMap((project) =>
     routing.locales.map((locale) => ({

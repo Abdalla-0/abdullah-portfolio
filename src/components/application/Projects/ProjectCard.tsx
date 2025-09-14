@@ -8,7 +8,7 @@ type ProjectCardProps = {
 };
 const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
   return (
-    <div className="group mb-10 relative z-10 shadow-primaryTint80 hover:shadow-primaryTint80 shadow-md hover:shadow-xl rounded-lg transition-all duration-500 overflow-hidden h-[400px] lg:h-[500px]">
+    <div className="group relative z-10 shadow-primaryTint80 hover:shadow-primaryTint80 shadow-md hover:shadow-xl rounded-lg transition-all duration-500 overflow-hidden h-[400px] lg:h-[500px]">
       <Link
         href={projectLink}
         target="_blank"
