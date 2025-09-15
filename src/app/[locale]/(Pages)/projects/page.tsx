@@ -1,7 +1,6 @@
 import ProjectCard from "@/components/application/Projects/ProjectCard";
 import Heading from "@/components/shared/Heading/Heading";
 import PaginationComponent from "@/components/shared/Pagination/Pagination";
-
 import {
   actionGetPublishedProgectsByPageNumber,
   actionGetPublishedProjectsCount,
@@ -14,7 +13,6 @@ type Props = {
 const projectsPage = async ({ params, searchParams }: Props) => {
   const { locale } = await params;
   const pageNumber = Number((await searchParams)?.pageNumber) || 1;
-
   const projects = await actionGetPublishedProgectsByPageNumber(
     locale,
     pageNumber
@@ -42,7 +40,7 @@ const projectsPage = async ({ params, searchParams }: Props) => {
             <PaginationComponent
               pagesCount={pagesCount}
               pageNumber={pageNumber}
-              route={`/${Routes.PROJECT}`}
+              route={`/${locale}/${Routes.PROJECTS}`}
             />
           </div>
         ) : (

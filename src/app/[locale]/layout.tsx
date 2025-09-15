@@ -44,7 +44,7 @@ const sora = Sora({
 });
 
 export const metadata: Metadata = {
-  title: "Abdalla Atef | Frontend Developer & UI/UX Designer",
+  title: "Abdalla Atef | Full Stack Web Developer & UI/UX Designer",
   description:
     "Portfolio of Abdullah Atef, a passionate Fullstack Developer and UI/UX Designer with expertise in React, Next.js, TypeScript, and other modern web technologies. Skilled in crafting responsive, high-performance websites and intuitive user experiences. Explore my projects, case studies, and design work.",
 };
@@ -54,7 +54,7 @@ export default async function RootLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
 

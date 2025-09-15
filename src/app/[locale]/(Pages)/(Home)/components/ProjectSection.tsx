@@ -1,4 +1,4 @@
-import SwiperButton from "@/components/application/Buttons/SwiperButton";
+import SwiperButton from "@/components/shared/Buttons/SwiperButton";
 import ProjectCard from "@/components/application/Projects/ProjectCard";
 import Heading from "@/components/shared/Heading/Heading";
 import SwiperComponent from "@/components/shared/Swiper/SwiperComponent";
@@ -26,7 +26,7 @@ const ProjectSection = async ({
               direction="end"
             />
           </div>
-          <Heading title={`projects`} className="pb-0" />
+          <Heading title={`projects`} className="!pb-0" />
           <Link
             href={`/${locale}/${Routes.PROJECTS}`}
             className="btn btn-primary text-xs md:text-base"

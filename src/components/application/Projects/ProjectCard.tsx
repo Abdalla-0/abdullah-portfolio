@@ -15,8 +15,8 @@ const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
         className="relative block w-full h-full"
       >
         <Image
-          src={project.image}
-          alt={project.translations[0].title}
+          src={project?.image}
+          alt={project?.translations[0]?.title}
           className="w-full h-full object-cover"
           width={0}
           height={240}
@@ -30,14 +30,14 @@ const ProjectCard = ({ project, projectLink }: ProjectCardProps) => {
         <div className="grid gap-2">
           <div className="flex items-center justify-between">
             <h3 className="text-3xl font-semibold line-clamp-1">
-              {project.translations[0].title}
+              {project?.translations[0]?.title}
             </h3>
             <span className="px-1 animate-bounce-x ar:animate-bounce-x-ar">
               <ArrowRight className="w-7 h-7" />
             </span>
           </div>
           <p className="text-lg line-clamp-1">
-            {project.translations[0].description}
+            {project?.translations[0]?.description}
           </p>
         </div>
       </Link>

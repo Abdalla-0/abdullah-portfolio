@@ -9,8 +9,7 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col items-center gap-4">
         <HeaderStart color="text-text" width={100} height={100} />
 
-        {/* حقوق النشر */}
-        <div className="flex items-center gap-1 text-lg">
+        <div className="flex items-center gap-1 ar:text-lg">
           © {year}
           <span className="text-[#222222] font-bold tracking-[1px]">
             {t("brandName")}

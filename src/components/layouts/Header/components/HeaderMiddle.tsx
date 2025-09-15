@@ -1,17 +1,18 @@
 import { Routes } from "@/utils/constants";
 import { Images, Lightbulb, PhoneCall, Warehouse } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-
-const Links = [
-  { href: Routes.ROOT, label: "home", icon: Warehouse },
-  { href: "#projectsSection", label: "projects", icon: Images },
-  { href: "#skillsSection", label: "skills", icon: Lightbulb },
-  { href: "#contactSection", label: "contactMe", icon: PhoneCall },
-];
 
 const HeaderMiddle = () => {
   const t = useTranslations("Header");
+  const locale = useLocale();
+
+  const Links = [
+    { href: `/${locale}/${Routes.ROOT}`, label: "home", icon: Warehouse },
+    { href: `/${locale}/${Routes.PROJECTS}`, label: "projects", icon: Images },
+    { href: `/${locale}#skillsSection`, label: "skills", icon: Lightbulb },
+    { href: `/${locale}#contactSection`, label: "contactMe", icon: PhoneCall },
+  ];
 
   return (
     <div className=" sm:order-none sm:ms-auto fixed bottom-0 left-0 w-full bg-primaryTint90 shadow-[-4px_0_20px_0_rgba(0,0,0,0.2)] z-10 sm:relative sm:bg-transparent sm:shadow-none inset">

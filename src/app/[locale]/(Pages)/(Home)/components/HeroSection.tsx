@@ -27,7 +27,7 @@ const HeroSection = () => {
             >
               {t("role")}
             </h1>
-            <p className="text-gray-600 text-lg">{t("description")}</p>
+            <p className="text-gray-600 text-lg ar:mt-3">{t("description")}</p>
             <div className="flex flex-wrap items-center gap-4 mt-4">
               <Link
                 href={`${Routes.CV}`}
