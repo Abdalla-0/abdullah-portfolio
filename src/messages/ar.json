@@ -45,8 +45,9 @@
       "btnAction": "لقطات الشاشة"
     },
     "content": {
-      "aboutProject": "عن المشروع"
-    }
+      "Overview": "نظرة عامة على المشروع"
+    },
+    "otherProjects": "مشاريع أخرى"
   },
 
   "Dashboard": {

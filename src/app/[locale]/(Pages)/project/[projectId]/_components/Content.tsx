@@ -4,8 +4,11 @@ import { useTranslations } from "next-intl";
 const Content = ({ project }: { project: ProjectWithRelations }) => {
   const t = useTranslations("ProjectPage.content");
   return (
-    <div>
-      <h3 className="text-2xl font-semibold">{t("aboutProject")}</h3>
+    <div className="flex flex-col gap-10">
+      <div className="flex flex-col">
+        <h3 className="text-2xl font-bold">{t("Overview")}</h3>
+        <p>{project.translations[0].description}</p>
+      </div>
       <div
         className="tiptap"
         dangerouslySetInnerHTML={{

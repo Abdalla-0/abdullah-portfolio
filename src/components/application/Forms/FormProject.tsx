@@ -4,26 +4,26 @@ import InputComponent from "@/components/shared/Form/InputComponent/InputCompone
 import UploadImage from "@/components/shared/Form/UploadImage/UploadImage";
 import UploadImages from "@/components/shared/Form/UploadImages/UploadImages";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import {
   actionNewProject,
   actionUpdateProject,
 } from "@/server/actions/projects";
 import { ProjectWithRelations } from "@/types/project";
-import { Languages, Routes } from "@/utils/constants";
+import { Languages } from "@/utils/constants";
 import {
   editProjectSchema,
   newProjectSchema,
   ProjectType,
 } from "@/validations/ProjectSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useTranslations } from "use-intl";
 import TextEditor from "../TextEditor/TextEditor";
-import { Switch } from "@/components/ui/switch";
-import { Label } from "@/components/ui/label";
 
 const FormProject = ({
   type,
@@ -32,7 +32,6 @@ const FormProject = ({
   type: "new" | "update";
   project?: ProjectWithRelations;
 }) => {
-  const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || Languages.ENGLISH;
 
@@ -150,7 +149,7 @@ const FormProject = ({
         toast.success("Project updated successfully!");
       }
 
-      router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}`);
+      // router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}`);
     } catch (error) {
       toast.error(
         `Error ${type === "new" ? "adding" : "updating"} Project! ${error}`

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";

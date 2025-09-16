@@ -45,8 +45,9 @@
       "btnAction": "Screenshots"
     },
     "content": {
-      "aboutProject": "About Project"
-    }
+      "Overview": "Overview"
+    },
+    "otherProjects": "Other Projects"
   },
 
   "Dashboard": {

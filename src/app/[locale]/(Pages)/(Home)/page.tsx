@@ -1,7 +1,7 @@
 import AdsSection from "./components/AdsSection";
 import Contact from "./components/Contact";
 import HeroSection from "./components/HeroSection";
-import ProjectSection from "./components/ProjectSection";
+import ProjectsList from "@/components/application/Projects/ProjectsList";
 import SkillSection from "./components/SkillSection";
 
 export default function Homeasync({
@@ -12,7 +12,7 @@ export default function Homeasync({
   return (
     <div>
       <HeroSection />
-      <ProjectSection params={params} />
+      <ProjectsList params={params} title="projects" />
       <AdsSection />
       <SkillSection />
       <Contact />

@@ -5,11 +5,12 @@ import SwiperComponent from "@/components/shared/Swiper/SwiperComponent";
 import { actionGetPublishedProgects } from "@/server/actions/projects";
 import { Routes } from "@/utils/constants";
 import Link from "next/link";
-const ProjectSection = async ({
-  params,
-}: {
+
+type Props = {
   params: Promise<{ locale: string }>;
-}) => {
+  title: string;
+};
+const ProjectSection = async ({ params, title }: Props) => {
   const { locale } = await params;
   const projects = await actionGetPublishedProgects(locale);
   return (
@@ -26,7 +27,7 @@ const ProjectSection = async ({
               direction="end"
             />
           </div>
-          <Heading title={`projects`} className="!pb-0" />
+          <Heading title={`${title}`} className="!pb-0" />
           <Link
             href={`/${locale}/${Routes.PROJECTS}`}
             className="btn btn-primary text-xs md:text-base"

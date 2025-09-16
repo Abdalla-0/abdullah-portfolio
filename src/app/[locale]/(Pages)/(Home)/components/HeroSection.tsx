@@ -18,7 +18,7 @@ const HeroSection = () => {
       <div className="container">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-4 relative">
           {/* Left Side */}
-          <div className="flex flex-col lg:gap-4">
+          <div className="flex flex-col">
             <h3 className="text-start text-4xl font-semibold">
               {t("greeting")}
             </h3>
