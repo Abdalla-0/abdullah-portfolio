@@ -83,7 +83,7 @@ export default function MenuBar({ editor }: { editor: Editor | null }) {
   ];
 
   return (
-    <div className="border rounded-md p-1 mb-1 bg-slate-50 flex items-center gap-2 z-50">
+    <div className="flex items-center flex-wrap border-primary rounded-md p-1 mb-1 bg-slate-50 gap-2 z-50">
       {/* Dropdown for Headings */}
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>

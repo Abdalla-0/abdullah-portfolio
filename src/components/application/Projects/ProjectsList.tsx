@@ -1,7 +1,7 @@
 import SwiperButton from "@/components/shared/Buttons/SwiperButton";
 import ProjectCard from "@/components/application/Projects/ProjectCard";
 import Heading from "@/components/shared/Heading/Heading";
-import SwiperComponent from "@/components/shared/Swiper/SwiperComponent";
+import SwiperComponent from "@/components/application/Projects/ProjectsSwiper";
 import { actionGetPublishedProgects } from "@/server/actions/projects";
 import { Routes } from "@/utils/constants";
 import Link from "next/link";

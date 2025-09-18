@@ -21,12 +21,12 @@ export default function TextEditor({
       StarterKit.configure({
         bulletList: {
           HTMLAttributes: {
-            class: "list-disc ml-3",
+            class: "list-disc ms-3",
           },
         },
         orderedList: {
           HTMLAttributes: {
-            class: "list-decimal ml-3",
+            class: "list-decimal ms-3",
           },
         },
       }),

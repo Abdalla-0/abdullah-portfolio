@@ -120,11 +120,6 @@
     display: inline-flex;
   }
 
-
-  .tiptap image {
-    max-width: 200px;
-  }
-
   .tiptap h1 {
     @apply text-2xl font-bold;
   }
@@ -232,5 +227,20 @@
 .project-page {
   h3 {
     @apply text-2xl font-bold mb-2;
+  }
+}
+
+body:has(.project-page) {
+  & footer {
+    margin-top: 0;
+  }
+}
+
+/* tiptap css  */
+.tiptap {
+  img {
+    /* @apply bg-primary; */
+    /* border: 1px solid var(--color-primary); */
+    border-radius: 16px;
   }
 }
