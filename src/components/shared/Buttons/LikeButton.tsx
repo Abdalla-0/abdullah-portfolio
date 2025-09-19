@@ -2,7 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { actionLike } from "@/server/actions/projects";
 import { ThumbsUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 type Props = {
   projectId: string;
@@ -13,7 +15,8 @@ type Props = {
 export default function LikeButton({ projectId, likesCount, locale }: Props) {
   const [likes, setLikes] = useState(likesCount);
   const [liked, setLiked] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const t = useTranslations("Common");
   useEffect(() => {
     const isLiked = localStorage.getItem(`liked-${projectId}`);
     if (isLiked) setLiked(true);
@@ -21,20 +24,33 @@ export default function LikeButton({ projectId, likesCount, locale }: Props) {
 
   const handleLike = async () => {
     if (liked) return;
-    const updatedLikes = await actionLike(projectId, locale);
-    setLiked(true);
-    localStorage.setItem(`liked-${projectId}`, "true");
-    setLikes(Number(updatedLikes));
+    setLoading(true);
+    try {
+      const updatedLikes = await actionLike(projectId, locale);
+      setLiked(true);
+      localStorage.setItem(`liked-${projectId}`, "true");
+      setLikes(Number(updatedLikes));
+    } catch (error) {
+      toast.error(String(error));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
     <Button
       onClick={handleLike}
-      className={`px-4 py-2 rounded transition w-fit text-white bg-blue-500`}
-      disabled={liked}
+      className={`px-4 w-fit py-2 rounded transition text-white bg-blue-500 hover:bg-blue-600`}
+      disabled={loading || liked}
     >
-      {likes}
-      <ThumbsUp className={`w-4 h-4 ${liked ? "text-white" : "text-black"}`} />
+      {loading ? (
+        t("loading")
+      ) : (
+        <>
+          <ThumbsUp className={`w-4 h-4`} />
+          {likes}
+        </>
+      )}
     </Button>
   );
 }
