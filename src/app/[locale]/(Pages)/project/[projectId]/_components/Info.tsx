@@ -7,7 +7,7 @@ import Link from "next/link";
 const Info = ({ project }: { project: ProjectWithRelations }) => {
   const t = useTranslations("ProjectPage.info");
   return (
-    <div className="flex flex-col justify-around border rounded-lg p-4 bg-gray-200">
+    <div className="flex flex-col justify-around gap-6 border rounded-lg p-4 bg-gray-200">
       <div>
         <h3 className="text-2xl font-semibold">{t("stack")}</h3>
         <p>{project.stack}</p>
@@ -29,7 +29,7 @@ const Info = ({ project }: { project: ProjectWithRelations }) => {
         </div>
       )}
       {project.previewLink !== "empty" && (
-        <div>
+        <div className="flex">
           <Link
             target="_blank"
             href={project.previewLink as string}

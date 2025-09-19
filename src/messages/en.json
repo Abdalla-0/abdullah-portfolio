@@ -52,10 +52,20 @@
 
   "Dashboard": {
     "newSkill": "Add new skill",
+    "updateSkill": "Update skill",
     "newProject": "Add new project",
+    "updateProject": "Update project",
     "Routes": {
       "projects": "Projects",
       "skills": "Skills"
+    },
+    "notifications": {
+      "skillAdded": "Skill added successfully!",
+      "skillUpdated": "Skill updated successfully!",
+      "skillDeleted": "Skill deleted successfully!",
+      "projectAdded": "Project added successfully!",
+      "projectUpdated": "Project updated successfully!",
+      "projectDeleted": "Project deleted successfully!"
     }
   },
 
@@ -76,6 +86,8 @@
       "projects": "Projects"
     },
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "Delete": "Delete",
+    "Cancel": "Cancel"
   }
 }

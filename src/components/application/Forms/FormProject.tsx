@@ -127,7 +127,10 @@ const FormProject = ({
         .forEach((t, i) => {
           formData.append(`translations[${i}][language]`, t.language);
           formData.append(`translations[${i}][title]`, t.title ?? "");
-          formData.append(`translations[${i}][description]`, t.description ?? "");
+          formData.append(
+            `translations[${i}][description]`,
+            t.description ?? ""
+          );
           formData.append(
             `translations[${i}][editorContent]`,
             t.editorContent ?? ""
@@ -143,10 +146,10 @@ const FormProject = ({
           return;
         }
         reset();
-        toast.success("Project added successfully!");
+        toast.success(t("Dashboard.notifications.projectAdded"));
       } else if (type === "update" && project) {
         await actionUpdateProject(formData, project.id, locale);
-        toast.success("Project updated successfully!");
+        toast.success(t("Dashboard.notifications.projectUpdated"));
       }
 
       // router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}`);
@@ -296,12 +299,12 @@ const FormProject = ({
                 {t("Common.loading")}
               </span>
             ) : type === "new" ? (
-              "Add Project"
+              t("Dashboard.newProject")
             ) : (
-              "Update Project"
+              t("Dashboard.updateProject")
             )}
           </Button>
-          <BackButton title="Cancel" />
+          <BackButton title={t("Common.Cancel")} />
         </div>
       </div>
     </form>

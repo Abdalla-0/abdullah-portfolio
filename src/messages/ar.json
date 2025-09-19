@@ -52,10 +52,20 @@
 
   "Dashboard": {
     "newSkill": "إضافة مهارة جديدة",
+    "updateSkill": "تحديث المهارة",
     "newProject": "إضافة مشروع جديد",
+    "updateProject": "تحديث المشروع",
     "Routes": {
       "projects": "المشاريع",
       "skills": "المهارات"
+    },
+    "notifications": {
+      "skillAdded": "تمت اضافة المهارة بنجاح",
+      "skillUpdated": "تم تحديث المهارة بنجاح",
+      "skillDeleted": "تم حذف المهارة بنجاح",
+      "projectAdded": "تمت اضافة المشروع بنجاح",
+      "projectUpdated": "تم تحديث المشروع بنجاح",
+      "projectDeleted": "تم حذف المشروع بنجاح"
     }
   },
 
@@ -71,12 +81,13 @@
       "locale": "{locale}",
       "label": "اللغة"
     },
-
     "Heading": {
       "skills": "المهارات",
       "projects": "المشاريع"
     },
     "login": "تسجيل الدخول",
-    "logout": "تسجيل الخروج"
+    "logout": "تسجيل الخروج",
+    "Delete": "حذف",
+    "Cancel": "الغاء"
   }
 }

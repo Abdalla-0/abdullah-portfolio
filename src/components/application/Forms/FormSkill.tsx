@@ -62,11 +62,11 @@ const FormSkill = ({ type, skill }: { type: string; skill?: Skill }) => {
       if (type === "new") {
         await actionNewSkill(formData);
         reset();
-        toast.success("Skill added successfully!");
+        toast.success(t("Dashboard.notifications.skillAdded"));
         router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.SKILLS}`);
       } else if (type === "update" && skill) {
         await actionUpdateSkill(formData, skill.id, locale);
-        toast.success("Skill updated successfully!");
+        toast.success(t("Dashboard.notifications.skillUpdated"));
         router.push(`/${locale}/${Routes.DASHBOARD}/${Routes.SKILLS}`);
       }
     } catch (error) {
@@ -98,7 +98,7 @@ const FormSkill = ({ type, skill }: { type: string; skill?: Skill }) => {
             register={register}
             placeholder="Order"
             error={errors.order?.message}
-          /> 
+          />
         </div>
 
         <div className="grid mt-10 space-y-3">
@@ -113,12 +113,12 @@ const FormSkill = ({ type, skill }: { type: string; skill?: Skill }) => {
                 {t("Common.loading")}
               </span>
             ) : type === "new" ? (
-              "Add Skill"
+              t("Dashboard.newSkill")
             ) : (
-              "Update Skill"
+              t("Dashboard.updateSkill")
             )}
           </Button>
-          <BackButton title="Cancel" />
+          <BackButton title={t("Common.Cancel")} />
         </div>
       </div>
     </form>
