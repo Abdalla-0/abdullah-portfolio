@@ -365,7 +365,6 @@ export const actionUpdateProject = async (
         },
       },
     });
-
     revalidateTag("projects");
     revalidatePath(
       `/${locale}/${Routes.DASHBOARD}/${Routes.PROJECTS}/${projectId}/${Routes.EDIT}`
@@ -448,6 +447,42 @@ export const actionGetSinglePublishedProject = cache(
   ["projects", "single-project"],
   { revalidate: 3600 }
 );
+
+export const actionLike = async (id: string, locale: string) => {
+  try {
+    const project = await db.project.findUnique({
+      where: {
+        id,
+      },
+    });
+    if (!project) return { message: "Project not fount", status: 404 };
+    const updatedProject = await db.project.update({
+      where: { id },
+      data: { likes: { increment: 1 } },
+      select: { likes: true }, // رجّع العدد الجديد بس
+    });
+
+    revalidatePath(`/${locale}/${Routes.PROJECT}/${id}`);
+
+    return updatedProject.likes;
+  } catch (error) {
+    console.error("Error liking project:", error);
+    throw new Error("Failed to like project");
+  }
+};
+export const actionGetLikes = async (id: string) => {
+  try {
+    const project = await db.project.findUnique({
+      where: { id },
+      select: { likes: true },
+    });
+    if (!project) return 0;
+    return project.likes;
+  } catch (error) {
+    console.error("Error fetching likes:", error);
+    throw new Error("Failed to get likes");
+  }
+};
 
 export const actionDeleteSingleProject = async (id: string) => {
   try {

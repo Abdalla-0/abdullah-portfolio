@@ -16,6 +16,7 @@ model Project {
   stack        String
   githubLink   String?
   previewLink  String?
+  likes        Int?                 @default(0)
   createdAt    DateTime             @default(now())
   updatedAt    DateTime             @updatedAt
   translations ProjectTranslation[]

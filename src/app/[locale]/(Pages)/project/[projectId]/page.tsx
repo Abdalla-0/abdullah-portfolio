@@ -1,12 +1,13 @@
+import ProjectsList from "@/components/application/Projects/ProjectsList";
+import LikeButton from "@/components/shared/Buttons/LikeButton";
 import { Locale, routing } from "@/i18n/routing";
 import {
   actionGetPublishedProgects,
-  actionGetSinglePublishedProject,
+  actionGetSinglePublishedProject
 } from "@/server/actions/projects";
 import Content from "./_components/Content";
 import Info from "./_components/Info";
 import ProjectGallery from "./_components/ProjectGallery";
-import ProjectsList from "@/components/application/Projects/ProjectsList";
 export async function generateStaticParams({
   params,
 }: {
@@ -27,10 +28,10 @@ const ProjectPage = async ({
   params: Promise<{ locale: Locale; projectId: string }>;
 }) => {
   const { projectId } = await params;
+  const { locale } = await params;
 
   const project =
-    (await actionGetSinglePublishedProject(projectId, (await params).locale)) ??
-    undefined;
+    (await actionGetSinglePublishedProject(projectId, locale)) ?? undefined;
   return (
     <div className="project-page mt-5">
       <div className="container">
@@ -42,6 +43,11 @@ const ProjectPage = async ({
             <Info project={project} />
             <ProjectGallery project={project} />
           </div>
+          <LikeButton
+            projectId={project.id}
+            likesCount={Number(project.likes)}
+            locale={locale}
+          />
           <Content project={project} />
         </div>
       </div>
