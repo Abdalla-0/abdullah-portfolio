@@ -1,19 +1,16 @@
 import ProjectsList from "@/components/application/Projects/ProjectsList";
 import LikeButton from "@/components/shared/Buttons/LikeButton";
 import { Locale, routing } from "@/i18n/routing";
-import {
-  actionGetPublishedProgects,
-  actionGetSinglePublishedProject
-} from "@/server/actions/projects";
+import { actionGetSinglePublishedProject } from "@/server/actions/projects";
+import { db } from "@/utils/db";
 import Content from "./_components/Content";
 import Info from "./_components/Info";
 import ProjectGallery from "./_components/ProjectGallery";
-export async function generateStaticParams({
-  params,
-}: {
-  params: { locale: Locale };
-}) {
-  const projects = await actionGetPublishedProgects(params.locale);
+export async function generateStaticParams({}) {
+  const projects = await db.project.findMany({
+    select: { id: true },
+    where: { isPublished: true },
+  });
 
   return projects.flatMap((project) =>
     routing.locales.map((locale) => ({

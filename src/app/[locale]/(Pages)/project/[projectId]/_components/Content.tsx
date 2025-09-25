@@ -10,7 +10,7 @@ const Content = ({ project }: { project: ProjectWithRelations }) => {
         <p>{project.translations[0].description}</p>
       </div>
       <div
-        className="tiptap"
+        className="tiptap mb-10"
         dangerouslySetInnerHTML={{
           __html: project.translations[0].editorContent ?? "",
         }}

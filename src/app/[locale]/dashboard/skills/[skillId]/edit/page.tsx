@@ -1,17 +1,21 @@
 import FormSkill from "@/components/application/Forms/FormSkill";
 import { routing } from "@/i18n/routing";
-import { actionGetSingleSkill, actionGetSkills } from "@/server/actions/skills";
+import { actionGetSingleSkill } from "@/server/actions/skills";
+import { db } from "@/utils/db";
 
 export async function generateStaticParams() {
-  const skills = await actionGetSkills();
+  const skills = await db.skill.findMany({
+    select: { id: true },
+  });
 
   return skills.flatMap((skill) =>
     routing.locales.map((locale) => ({
       locale,
-      projectId: skill.id,
+      skillId: skill.id,
     }))
   );
 }
+
 const EditSkillPage = async ({
   params,
 }: {

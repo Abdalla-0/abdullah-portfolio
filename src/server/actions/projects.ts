@@ -14,19 +14,15 @@ import {
 } from "@/utils/constants";
 import { parseTranslationsFromFormData } from "@/utils/parseTranslationsFromFormData";
 
-export const actionGetAllProjects = cache(
-  async () => {
-    return await db.project.findMany({
-      include: {
-        gallery: { orderBy: { order: "asc" } },
-        translations: true,
-      },
-      orderBy: { order: "asc" },
-    });
-  },
-  ["all-projects"],
-  { revalidate: false, tags: ["projects"] }
-);
+export const actionGetAllProjects = async () => {
+  return await db.project.findMany({
+    include: {
+      gallery: { orderBy: { order: "asc" } },
+      translations: true,
+    },
+    orderBy: { order: "asc" },
+  });
+};
 
 /**
  * @description  get projects by age number
