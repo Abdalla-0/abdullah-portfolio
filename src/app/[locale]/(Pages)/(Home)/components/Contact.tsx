@@ -7,7 +7,7 @@ import Image from "next/image";
 const Contact = () => {
   const t = useTranslations("HomePage.Contact");
   return (
-    <section id="contactSection" className="py-20">
+    <section id="contact" className="py-20">
       <div className="container">
         <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-12">
           {/* Contact Info */}

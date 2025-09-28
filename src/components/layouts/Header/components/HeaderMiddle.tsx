@@ -10,8 +10,8 @@ const HeaderMiddle = () => {
   const Links = [
     { href: `/${locale}/${Routes.ROOT}`, label: "home", icon: Warehouse },
     { href: `/${locale}/${Routes.PROJECTS}`, label: "projects", icon: Images },
-    { href: `/${locale}#skillsSection`, label: "skills", icon: Lightbulb },
-    { href: `/${locale}#contactSection`, label: "contactMe", icon: PhoneCall },
+    { href: `/${locale}#skills`, label: "skills", icon: Lightbulb },
+    { href: `/${locale}#contact`, label: "contactMe", icon: PhoneCall },
   ];
 
   return (

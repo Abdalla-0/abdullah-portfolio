@@ -6,7 +6,7 @@ const SkillSection = async () => {
   const skills = await actionGetSkills();
 
   return (
-    <section id="skillsSection" className="section-gap section-bg">
+    <section id="skills" className="section-gap section-bg">
       <div className="container">
         <Heading title={`skills`} />
         <div className={`grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4`}>

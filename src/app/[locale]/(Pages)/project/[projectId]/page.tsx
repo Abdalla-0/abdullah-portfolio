@@ -33,7 +33,7 @@ const ProjectPage = async ({
     <div className="project-page mt-5">
       <div className="container">
         <div className="flex flex-col gap-10">
-          <h1 className="text-6xl text-center font-medium">
+          <h1 className="text-[48px] md:text-[60px] leading-tight text-center font-medium">
             {project?.translations[0]?.title}
           </h1>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
