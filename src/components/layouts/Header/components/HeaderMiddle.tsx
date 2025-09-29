@@ -1,5 +1,5 @@
 import { Routes } from "@/utils/constants";
-import { Images, Lightbulb, PhoneCall, Warehouse } from "lucide-react";
+import { Images, Lightbulb, Warehouse } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -11,7 +11,7 @@ const HeaderMiddle = () => {
     { href: `/${locale}/${Routes.ROOT}`, label: "home", icon: Warehouse },
     { href: `/${locale}/${Routes.PROJECTS}`, label: "projects", icon: Images },
     { href: `/${locale}#skills`, label: "skills", icon: Lightbulb },
-    { href: `/${locale}#contact`, label: "contactMe", icon: PhoneCall },
+    // { href: `/${locale}#contact`, label: "contactMe", icon: PhoneCall },
   ];
 
   return (
