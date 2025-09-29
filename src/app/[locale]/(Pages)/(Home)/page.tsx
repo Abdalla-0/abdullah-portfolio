@@ -1,5 +1,5 @@
 import AdsSection from "./components/AdsSection";
-// import Contact from "./components/Contact";
+import Contact from "./components/Contact";
 import HeroSection from "./components/HeroSection";
 import ProjectsList from "@/components/application/Projects/ProjectsList";
 import SkillSection from "./components/SkillSection";
@@ -15,7 +15,7 @@ export default function Homeasync({
       <ProjectsList params={params} title="projects" />
       <AdsSection />
       <SkillSection />
-      {/* <Contact /> */}
+      <Contact />
     </div>
   );
 }
