@@ -6,7 +6,13 @@ import { db } from "@/utils/db";
 import Content from "./_components/Content";
 import Info from "./_components/Info";
 import ProjectGallery from "./_components/ProjectGallery";
-export async function generateStaticParams({}) {
+
+
+type ProjectParams = {
+  params: { projectId: string };
+};
+
+export async function generateStaticParams({}: ProjectParams) {
   const projects = await db.project.findMany({
     select: { id: true },
     where: { isPublished: true },
