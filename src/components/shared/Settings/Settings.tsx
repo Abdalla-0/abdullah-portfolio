@@ -13,30 +13,59 @@ const colorThemes = {
 };
 
 const Settings = () => {
-  const [theme, setTheme] = useState({ bgColor: "", textColor: "" });
+  const [theme, setTheme] = useState({
+    bgColor: "#783cb4",
+    textColor: "#ffffff",
+  });
 
   const [isMenu, setIsMenu] = useState(false);
+
+  // const switchColorHandler = (bgColor: string, textColor: string) => {
+  //   document.documentElement.style.setProperty("--color-primary", bgColor);
+  //   document.documentElement.style.setProperty("--color-text", textColor);
+  //   localStorage.setItem("theme", JSON.stringify({ bgColor, textColor }));
+  //   setTheme({ bgColor, textColor });
+  // };
+
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || Languages.ENGLISH;
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("app_user_theme");
+
+    if (savedTheme) {
+      try {
+        const parsedTheme = JSON.parse(savedTheme);
+        if (parsedTheme.bgColor) {
+          setTheme(parsedTheme);
+          document.documentElement.style.setProperty(
+            "--color-primary",
+            parsedTheme.bgColor,
+          );
+          document.documentElement.style.setProperty(
+            "--color-text",
+            parsedTheme.textColor,
+          );
+          return;
+        }
+      } catch (error) {
+        console.error("Error parsing saved theme:", error);
+        localStorage.removeItem("app_user_theme");
+      }
+    }
+    document.documentElement.style.setProperty("--color-primary", "#783cb4");
+    document.documentElement.style.setProperty("--color-text", "#ffffff");
+  }, []);
 
   const switchColorHandler = (bgColor: string, textColor: string) => {
     document.documentElement.style.setProperty("--color-primary", bgColor);
     document.documentElement.style.setProperty("--color-text", textColor);
-    localStorage.setItem("theme", JSON.stringify({ bgColor, textColor }));
+    localStorage.setItem(
+      "app_user_theme",
+      JSON.stringify({ bgColor, textColor }),
+    );
     setTheme({ bgColor, textColor });
   };
-
-    const pathname = usePathname();
-    const locale = pathname.split("/")[1] || Languages.ENGLISH;
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      const { bgColor, textColor } = JSON.parse(savedTheme);
-
-      setTheme({ bgColor, textColor });
-      document.documentElement.style.setProperty("--color-primary", bgColor);
-      document.documentElement.style.setProperty("--color-text", textColor);
-    }
-  }, []);
 
   return (
     <div
@@ -64,7 +93,7 @@ const Settings = () => {
             onClick={() =>
               switchColorHandler(
                 value,
-                name === "yellow" ? "#2b3035" : "#ffffff"
+                name === "yellow" ? "#2b3035" : "#ffffff",
               )
             }
           ></span>
