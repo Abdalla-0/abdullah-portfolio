@@ -1,6 +1,6 @@
 "use client";
 import { Routes } from "@/utils/constants";
-import { Download, Github, Linkedin } from "lucide-react";
+import { Github, Linkedin, View } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +34,7 @@ const HeroSection = () => {
                 target="_blank"
                 className="flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-full hover:bg-primary hover:text-white transition"
               >
-                {t("view_cv")} <Download size={20} />
+                {t("view_cv")} <View size={20} />
               </Link>
               <div className="flex gap-4">
                 <Link
