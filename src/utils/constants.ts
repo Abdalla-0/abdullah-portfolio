@@ -22,7 +22,7 @@ export enum Routes {
     NEW = "new",
     EDIT = "edit",
     DELETE = "delete",
-    CV = "https://drive.google.com/file/d/1JhjRJ1ybmVu0Zh-7-4qreSpxMQO28Q8e/view?usp=sharing",
+    CV = "https://drive.google.com/file/d/1EAHBDrwAQIZaoegP6Ifm5l9VTo8sqESC/view?usp=drive_link",
     LINKEDIN = "https://www.linkedin.com/in/abdalla-atef/",
     GITHUB = "https://github.com/Abdalla-0",
     LOGIN = "login",
